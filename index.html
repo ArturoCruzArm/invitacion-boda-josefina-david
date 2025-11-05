@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda - Josefina & David</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='80'>💍</text></svg>">
+
+    <!-- Fuentes actualizadas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mr+De+Haviland&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Música de fondo -->
+    <audio id="background-music" loop>
+        <source src="musica-fondo.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Botón de música -->
+    <button id="music-toggle" class="music-btn" aria-label="Controlar música">
+        <i id="music-icon" class="fas fa-volume-mute"></i>
+    </button>
+
+    <!-- FIXED DECORATIONS - Stay in place throughout entire page -->
+    <div class="fixed-background">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+    </div>
+
+    <!-- TRANSITIONING CONTENT SECTIONS -->
+    <main class="content-wrapper">
+
+        <!-- 1. Hero Section INICIAL -->
+        <section class="content-section active" data-section="initial">
+            <div class="hero-content">
+                <p class="hero-subtitle">TE INVITAMOS A</p>
+                <h1 class="hero-title">NUESTRA BODA</h1>
+
+                <div class="couple-names-container">
+                    <h2 class="couple-names">
+                        Josefina <br>
+                        <span class="ampersand-small">y</span> <br>
+                        David
+                    </h2>
+                </div>
+
+                <div class="date-container">
+                    <p class="date-month">NOVIEMBRE</p>
+                    <div class="date-row">
+                        <span class="date-day">VIERNES</span>
+                        <span class="date-number">15</span>
+                        <span class="date-time">4:00pm</span>
+                    </div>
+                </div>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+        <!-- 2. Parents Section -->
+        <section class="content-section" data-section="parents">
+            <div class="hero-content">
+                <p class="hero-subtitle">CON LA BENDICIÓN DE</p>
+                <h1 class="hero-title">NUESTROS PADRES</h1>
+
+                <div class="parents-hero-group">
+                    <h3 class="parents-hero-label">Padres de la Novia</h3>
+                    <div class="parents-hero-names">
+                        <p>Ma. de la Luz Escalante López</p>
+                        <p>José Luis Escalante López</p>
+                    </div>
+                </div>
+
+                <div class="parents-hero-divider">
+                    <span class="ampersand-small">&</span>
+                </div>
+
+                <div class="parents-hero-group">
+                    <h3 class="parents-hero-label">Padres del Novio</h3>
+                    <div class="parents-hero-names">
+                        <p>Jorge Ricardo Barrón Muñoz</p>
+                        <p>Maria Isabel Pérez López</p>
+                    </div>
+                </div>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+        <!-- 3. Quote Section -->
+        <section class="content-section" data-section="quote">
+            <div class="hero-content">
+                <p class="hero-subtitle">CON TODO NUESTRO AMOR</p>
+                <h1 class="hero-title">AGRADECIMIENTO</h1>
+
+                <div class="quote-hero-text">
+                    <p class="quote-message">Muchas gracias por compartir este momento tan especial con nosotros. Hemos pasado por muchas cosas pero al final el amor verdadero siempre gana. Y ahora con la bendición de Dios agradecemos que sean testigos de esto maravilloso y especial</p>
+                </div>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+        <!-- 4. Countdown Section -->
+        <section class="content-section" data-section="countdown">
+            <div class="hero-content">
+                <p class="hero-subtitle">NUESTRO GRAN DÍA EN</p>
+                <h1 class="hero-title">CUENTA REGRESIVA</h1>
+
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="days">00</span>
+                        <span class="countdown-label">Días</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="hours">00</span>
+                        <span class="countdown-label">Horas</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="minutes">00</span>
+                        <span class="countdown-label">Minutos</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="countdown-number" id="seconds">00</span>
+                        <span class="countdown-label">Segundos</span>
+                    </div>
+                </div>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+        <!-- 5. Ceremony Section -->
+        <section class="content-section" data-section="ceremony">
+            <div class="hero-content">
+                <p class="hero-subtitle">TE ESPERAMOS EN</p>
+                <h1 class="hero-title">CEREMONIA RELIGIOSA</h1>
+
+                <div class="event-hero-details">
+                    <div class="event-icon"><i class="fas fa-church"></i></div>
+                    <p class="event-time">4:00 PM</p>
+                    <p class="event-location">Parroquia de San Pio X</p>
+                    <p class="event-address">C. Angela Peralta S/N, León Moderno, León, Gto.</p>
+                    <p class="event-note"><i class="fas fa-star"></i> Todos pueden asistir</p>
+                    <p class="event-suggestion"><i class="far fa-clock"></i> Sugerimos llegar 15 minutos antes</p>
+                    <p class="event-celebrants"><i class="fas fa-hands-praying"></i> Celebrante: Pbro. Mario Alberto Escalante López<br>Concelebrante: Pbro. Victor Manuel Escalante López</p>
+                    <div class="map-buttons">
+                        <a href="https://www.google.com/maps/search/?api=1&query=C.+Angela+Peralta+S%2FN+Leon+Moderno+Leon+Gto" target="_blank" class="btn-map">
+                            <i class="fas fa-map-marked-alt"></i> Google Maps
+                        </a>
+                        <a href="https://www.waze.com/ul?q=C.+Angela+Peralta+Leon+Moderno+Leon+Gto&navigate=yes" target="_blank" class="btn-map btn-waze">
+                            <i class="fas fa-car"></i> Waze
+                        </a>
+                    </div>
+                </div>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+        <!-- 6. Reception Section -->
+        <section class="content-section" data-section="reception">
+            <div class="hero-content">
+                <p class="hero-subtitle">CELEBREMOS EN</p>
+                <h1 class="hero-title">RECEPCIÓN</h1>
+
+                <div class="event-hero-details">
+                    <div class="event-icon"><i class="fas fa-glass-cheers"></i></div>
+                    <p class="event-time">Al terminar la ceremonia</p>
+                    <p class="event-location">Salón Triana</p>
+                    <p class="event-address">Blvd. Vicente Valtierra 2901<br>León, Guanajuato</p>
+                    <p class="event-suggestion"><i class="far fa-clock"></i> Sugerimos llegar 15 minutos antes</p>
+                    <div class="map-buttons">
+                        <a href="https://www.google.com/maps/search/?api=1&query=Salon+Triana+Blvd.+Vicente+Valtierra+2901+Leon+Guanajuato" target="_blank" class="btn-map">
+                            <i class="fas fa-map-marked-alt"></i> Google Maps
+                        </a>
+                        <a href="https://www.waze.com/ul?q=Salon+Triana+Blvd.+Vicente+Valtierra+2901+Leon+Guanajuato&navigate=yes" target="_blank" class="btn-map btn-waze">
+                            <i class="fas fa-car"></i> Waze
+                        </a>
+                    </div>
+                </div>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+        <!-- 8. Dress Code Section -->
+        <section class="content-section" data-section="dresscode">
+            <div class="hero-content">
+                <p class="hero-subtitle">CÓDIGO DE</p>
+                <h1 class="hero-title">VESTIMENTA</h1>
+
+                <div class="dresscode-content">
+                    <div class="event-icon"><i class="fas fa-user-tie"></i></div>
+                    <p class="dress-code-text">Formal</p>
+                </div>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+        <!-- 9. Gifts Section -->
+        <section class="content-section" data-section="gifts">
+            <div class="hero-content">
+                <p class="hero-subtitle">SI DESEAS OBSEQUIARNOS</p>
+                <h1 class="hero-title">MESA DE REGALOS</h1>
+
+                <p class="gifts-subtitle">Tu presencia es nuestro mejor regalo</p>
+
+                <div class="gifts-hero-content">
+                    <div class="event-icon"><i class="fas fa-gift"></i></div>
+                    <h3>Lluvia de Sobres</h3>
+                    <p>Puedes obsequiarnos un sobre el día del evento</p>
+                </div>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+        <!-- 10. Social Media Section -->
+        <section class="content-section" data-section="social">
+            <div class="hero-content">
+                <p class="hero-subtitle">QUEREMOS VER TUS FOTOS</p>
+                <h1 class="hero-title">COMPARTE CON NOSOTROS</h1>
+
+                <p class="social-subtitle">Usa nuestro hashtag en redes sociales</p>
+                <h3 class="hashtag">#JosefinaYDavid2025</h3>
+
+                <div class="social-links">
+                    <p class="social-info">¡Comparte tus fotos y videos con nosotros!</p>
+                </div>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+        <!-- 11. RSVP Section -->
+        <section class="content-section" data-section="rsvp">
+            <div class="hero-content">
+                <p class="hero-subtitle">NECESITAMOS SABER</p>
+                <h1 class="hero-title">CONFIRMACIÓN</h1>
+
+                <p class="rsvp-subtitle">Por favor confirma tu asistencia antes del 8 de noviembre de 2025</p>
+
+                <div class="whatsapp-numbers">
+                    <div class="whatsapp-item">
+                        <p class="whatsapp-name"><i class="fas fa-ring"></i> Josefina & David</p>
+                        <p class="rsvp-message">Contacta a los novios para confirmar tu asistencia</p>
+                    </div>
+                </div>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+        <!-- 12. Info Section -->
+        <section class="content-section" data-section="info">
+            <div class="hero-content">
+                <p class="hero-subtitle">DETALLES QUE DEBES SABER</p>
+                <h1 class="hero-title">INFORMACIÓN</h1>
+
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-music"></i></div>
+                        <h3>Música</h3>
+                        <p>¡Habrá música en vivo y DJ!</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-utensils"></i></div>
+                        <h3>Comida y Bebida</h3>
+                        <p>Cena completa y barra libre</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-parking"></i></div>
+                        <h3>Estacionamiento</h3>
+                        <p>Habrá estacionamiento disponible</p>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon"><i class="fas fa-church"></i></div>
+                        <h3>Ceremonia</h3>
+                        <p>Todos pueden asistir</p>
+                    </div>
+                </div>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-message">¡Gracias por acompañarnos en este día tan especial!</p>
+            <p class="footer-names">Josefina & David</p>
+            <p class="footer-date">15.11.2025</p>
+            <p class="footer-credit">Invitaciones, Fotografía, Video y Dron: Foro 7 - Arturo Cruz - 477-920-3776</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1440 @@
+/* ===================================
+   VARIABLES CSS ACTUALIZADAS
+   =================================== */
+:root {
+    /* Paleta de colores estilo peonía/eucalipto */
+    --crema-calido: #F8F6F0;
+    --verde-eucalipto: #2d4232; /* Oscurecido para mejor contraste */
+    --verde-salvia: #5a6e4d; /* Oscurecido para mejor contraste */
+    --beige-taupe: #8a7866; /* Oscurecido para mejor contraste */
+    --dorado-elegante: #b89320; /* Oscurecido para mejor contraste */
+    --texto-oscuro: #000000; /* Negro puro */
+    --texto-medio: #333333; /* Gris muy oscuro */
+    --blanco-floral: #FFFBF5;
+
+    /* Tipografías */
+    --font-script: 'Mr De Haviland', cursive;
+    --font-serif: 'Cormorant Garamond', serif;
+    --font-sans: 'Montserrat', sans-serif;
+}
+
+/* ===================================
+   ANIMACIONES DE APARICIÓN
+   =================================== */
+
+/* Clase base para elementos animados */
+.fade-in-up {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Variaciones de animación */
+.fade-in-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fade-in-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-in-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+}
+
+.scale-in {
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scale-in.visible {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Delays escalonados para múltiples elementos */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
+.delay-5 { transition-delay: 0.5s; }
+.delay-6 { transition-delay: 0.6s; }
+
+/* ===================================
+   RESET Y BASE
+   =================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    color: var(--texto-oscuro);
+    background: var(--crema-calido);
+    line-height: 1.6;
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* Textura de papel sutil por encima */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/></filter><rect width="100" height="100" filter="url(%23noise)" opacity="0.03"/></svg>');
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* ===================================
+   BOTÓN DE MÚSICA
+   =================================== */
+.music-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--verde-eucalipto);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+}
+
+.music-btn:hover {
+    transform: scale(1.1);
+    background: var(--dorado-elegante);
+    box-shadow: 0 6px 20px rgba(212, 175, 55, 0.4);
+}
+
+/* ===================================
+   FIXED BACKGROUND ARCHITECTURE
+   =================================== */
+
+/* Fixed background container - stays in place throughout entire page */
+.fixed-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: var(--crema-calido);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Decoraciones florales - FIXED */
+.fixed-background .floral-decoration {
+    position: fixed;
+    z-index: 3;
+    opacity: 0.9;
+    pointer-events: none;
+}
+
+.fixed-background .floral-decoration.top-left {
+    top: -20px;
+    left: -20px;
+    width: min(450px, 40vw);
+    animation: gentleFloat 8s ease-in-out infinite;
+}
+
+.fixed-background .floral-decoration.bottom-right {
+    bottom: -20px;
+    right: -20px;
+    width: min(500px, 45vw);
+    animation: gentleFloat 10s ease-in-out infinite reverse;
+}
+
+.fixed-background .floral-decoration img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+@keyframes gentleFloat {
+    0%, 100% { transform: translateY(0) translateX(0) rotate(0deg); }
+    33% { transform: translateY(-15px) translateX(5px) rotate(1deg); }
+    66% { transform: translateY(10px) translateX(-5px) rotate(-1deg); }
+}
+
+/* Marco geométrico - FIXED */
+.fixed-background .geometric-frame {
+    position: fixed;
+    border: 1px solid var(--beige-taupe);
+    border-radius: 12px;
+    width: calc(100vw - 80px);
+    height: calc(100vh - 80px);
+    top: 40px;
+    left: 40px;
+    pointer-events: none;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+.fixed-background .geometric-frame::before {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: 1px solid var(--beige-taupe);
+    border-radius: 50%;
+    top: -12px;
+    right: 30%;
+}
+
+.fixed-background .geometric-frame::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--beige-taupe);
+    bottom: -10px;
+    left: 30%;
+    clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+}
+
+/* ===================================
+   TRANSITIONING CONTENT SECTIONS
+   =================================== */
+
+/* Content wrapper */
+.content-wrapper {
+    position: relative;
+    z-index: 2;
+}
+
+/* Content sections - these transition in and out */
+.content-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.content-section.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.content-section.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Asegurar contraste en secciones de contenido sobre fondo crema */
+.content-section .hero-subtitle,
+.content-section .hero-title,
+.content-section .couple-names,
+.content-section .date-month,
+.content-section .date-day,
+.content-section .date-time,
+.content-section .date-number {
+    color: #000000;
+}
+
+.content-section .event-hero-details .event-location,
+.content-section .dresscode-content,
+.content-section .gifts-hero-content h3,
+.content-section .gifts-hero-content p,
+.content-section .social-subtitle,
+.content-section .rsvp-subtitle,
+.content-section .whatsapp-name {
+    color: #000000;
+}
+
+.content-section .gifts-hero-content p,
+.content-section .event-hero-details .event-address {
+    color: #333333;
+}
+
+/* Estilos adicionales para contraste */
+.event-hero-details {
+    color: #000000;
+}
+
+.event-hero-details .event-time {
+    color: #000000; /* Negro para máximo contraste */
+}
+
+.event-hero-details .event-note {
+    color: var(--verde-eucalipto); /* Verde oscuro ya actualizado */
+}
+
+.event-hero-details .event-suggestion {
+    color: #555555;
+}
+
+.dresscode-content .dress-code-text {
+    color: #000000;
+}
+
+.gifts-hero-content {
+    color: #000000;
+}
+
+.gifts-hero-content h3 {
+    color: #000000;
+}
+
+.social-subtitle {
+    color: #000000;
+}
+
+.info-grid .info-card h3 {
+    color: #000000; /* Negro para máximo contraste */
+}
+
+.info-grid .info-card p {
+    color: #333333;
+}
+
+/* Old hero styles - now deprecated */
+.hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    overflow: visible;
+    padding: 60px 20px;
+}
+
+/* Old floral decorations - only hide those NOT in fixed-background */
+section .floral-decoration,
+.hero .floral-decoration {
+    display: none;
+}
+
+/* Old geometric frame - now removed from sections */
+.hero .geometric-frame {
+    display: none;
+}
+
+/* Contenido del Hero */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    max-width: 900px;
+    padding: 2rem;
+}
+
+.hero-subtitle {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    font-size: clamp(0.75rem, 2vw, 0.95rem);
+    letter-spacing: 8px;
+    color: #1a1a1a; /* Negro oscuro para mejor contraste */
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    animation: fadeDown 1s ease-out;
+}
+
+.hero-title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: clamp(2rem, 5vw, 3rem);
+    letter-spacing: 12px;
+    color: #000000; /* Negro puro para títulos principales */
+    margin-bottom: 50px;
+    text-transform: uppercase;
+    animation: fadeUp 1s ease-out 0.2s backwards;
+}
+
+.couple-names-container {
+    margin: 60px 0;
+    animation: fadeUp 1s ease-out 0.4s backwards;
+}
+
+.couple-names {
+    font-family: var(--font-script);
+    font-size: clamp(5rem, 14vw, 9rem);
+    font-weight: 400;
+    line-height: 1;
+    color: #000000; /* Negro puro para nombres principales */
+    margin: 0;
+}
+
+.ampersand-small {
+    font-family: var(--font-script);
+    font-size: 0.7em;
+    display: inline-block;
+    margin: 15px 0;
+    color: #1a2820; /* Verde muy oscuro para máximo contraste */
+}
+
+.date-container {
+    margin-top: 70px;
+    animation: fadeUp 1s ease-out 0.6s backwards;
+}
+
+.date-month {
+    font-family: var(--font-sans);
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    letter-spacing: 6px;
+    font-weight: 400;
+    margin-bottom: 25px;
+    color: #000000; /* Negro para texto sobre fondo crema */
+}
+
+.date-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.date-day,
+.date-time {
+    font-family: var(--font-sans);
+    font-size: clamp(0.85rem, 2vw, 1.05rem);
+    font-weight: 400;
+    letter-spacing: 2px;
+    position: relative;
+    color: #000000; /* Negro para mejor contraste */
+}
+
+.date-day::after {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 1px;
+    background-color: #000000; /* Negro para líneas decorativas */
+    top: 50%;
+    right: -50px;
+}
+
+.date-time::before {
+    content: '';
+    position: absolute;
+    width: 60px;
+    height: 1px;
+    background-color: #000000; /* Negro para líneas decorativas */
+    top: 50%;
+    left: -50px;
+}
+
+.date-number {
+    font-family: var(--font-serif);
+    font-size: clamp(5rem, 15vw, 8rem);
+    font-weight: 300;
+    line-height: 1;
+    color: #000000; /* Negro para número principal */
+}
+
+.scroll-indicator {
+    margin-top: 60px;
+    font-size: 2rem;
+    animation: bounce 2s infinite;
+    color: #1a2820; /* Verde muy oscuro para máximo contraste */
+}
+
+/* Animaciones del Hero */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(12px); }
+}
+
+/* ===================================
+   CONTENEDORES Y SECCIONES
+   =================================== */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    position: relative;
+    z-index: 2;
+}
+
+section {
+    padding: 5rem 2rem;
+    position: relative;
+}
+
+.section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 3rem);
+    text-align: center;
+    color: #000000; /* Negro para máximo contraste */
+    margin-bottom: 3rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    position: relative;
+}
+
+.memorial-cross {
+    font-size: 1.3rem;
+    color: #8B6914;
+    text-shadow: 0 0 10px rgba(139, 105, 20, 0.4);
+    margin-left: 0.3rem;
+    display: inline;
+}
+
+/* ===================================
+   PARENTS HERO SECTION - NUEVA SECCIÓN
+   =================================== */
+.parents-hero {
+    background: var(--crema-calido);
+}
+
+.parents-hero-group {
+    margin: 3rem 0;
+}
+
+.parents-hero-label {
+    font-family: var(--font-sans);
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    letter-spacing: 4px;
+    font-weight: 500;
+    color: #1a2820; /* Verde muy oscuro para máximo contraste */
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.parents-hero-names {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #000000; /* Negro para nombres sobre fondo crema */
+}
+
+.parents-hero-names p {
+    margin: 0.5rem 0;
+}
+
+.parents-hero-memory {
+    font-size: clamp(0.9rem, 2vw, 1.1rem) !important;
+    font-style: italic;
+    color: #333333 !important; /* Gris oscuro para texto secundario */
+    margin-top: 0.8rem !important;
+    font-family: var(--font-sans) !important;
+    font-weight: 300;
+}
+
+.parents-hero-divider {
+    margin: 3rem 0;
+    opacity: 0;
+    transition: opacity 1s ease-out 1s;
+}
+
+/* Cuando la sección es visible (clase agregada por JS) */
+.parents-hero.visible .parents-hero-divider {
+    opacity: 1;
+}
+
+/* Estilos para letras animadas individualmente */
+.parents-hero-label span,
+.parents-hero-names span,
+.parents-hero-memory span {
+    display: inline-block;
+}
+
+.parents-hero-divider .ampersand-small {
+    font-size: 4rem;
+    opacity: 0.5;
+}
+
+/* Animaciones de desplazamiento horizontal */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive para la nueva sección */
+@media (max-width: 768px) {
+    .parents-hero-label {
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+    }
+    
+    .parents-hero-names {
+        font-size: 1.3rem;
+    }
+    
+    .parents-hero-divider .ampersand-small {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .parents-hero-names {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .parents-hero-names p {
+        padding: 0 0.5rem;
+        word-break: break-word;
+    }
+
+    .quote-message {
+        font-size: 2.5rem;
+        padding: 0 1rem;
+    }
+}
+
+/* ===================================
+   QUOTE HERO SECTION - ESTILO HERO
+   =================================== */
+.quote-hero {
+    background: var(--crema-calido);
+}
+
+.quote-hero-text {
+    margin: 60px 0;
+    animation: fadeUp 1s ease-out 0.4s backwards;
+}
+
+.quote-message {
+    font-family: var(--font-script);
+    font-size: clamp(2.8rem, 6vw, 4.2rem);
+    line-height: 1.6;
+    color: #000000; /* Negro para texto principal sobre fondo crema */
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    font-weight: 400;
+}
+
+/* ===================================
+   CUENTA REGRESIVA
+   =================================== */
+.countdown-section {
+    background: var(--crema-calido);
+    padding: 5rem 2rem;
+}
+
+/* Countdown dentro de content-section sobre fondo crema */
+.content-section .countdown {
+    color: #000000;
+}
+
+.countdown {
+    display: flex;
+    justify-content: center;
+    gap: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.countdown-item {
+    text-align: center;
+    padding: 2.5rem;
+    background: white;
+    border-radius: 15px;
+    min-width: 130px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    border: 1px solid rgba(201, 184, 163, 0.3);
+    transition: all 0.3s ease;
+}
+
+.countdown-item:hover {
+    transform: translateY(-8px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.25);
+    border-color: var(--dorado-elegante);
+}
+
+.countdown-number {
+    display: block;
+    font-size: clamp(3rem, 6vw, 4.5rem);
+    font-weight: 300;
+    color: #000000; /* Negro para máximo contraste */
+    font-family: var(--font-serif);
+    line-height: 1;
+}
+
+.countdown-label {
+    display: block;
+    font-size: 1rem;
+    color: #000000; /* Negro para máximo contraste */
+    margin-top: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 400;
+}
+
+/* ===================================
+   DETALLES DEL EVENTO
+   =================================== */
+.event-details {
+    background: white;
+    padding: 5rem 2rem;
+}
+
+.event-card {
+    background: var(--crema-calido);
+    padding: 3rem 2.5rem;
+    border-radius: 20px;
+    text-align: center;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    transition: all 0.4s ease;
+    border-top: 3px solid var(--dorado-elegante);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 2.5rem;
+}
+
+.event-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(212, 175, 55, 0.25);
+    border-top-width: 5px;
+}
+
+.event-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.event-card:hover .event-icon {
+    transform: scale(1.2) rotate(5deg);
+}
+
+.event-card h3 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    color: #000000; /* Negro para máximo contraste */
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.event-time {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000; /* Negro para máximo contraste */
+    margin-bottom: 1.2rem;
+}
+
+.event-location {
+    font-size: 1.4rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #000000; /* Negro para ubicaciones sobre fondo crema */
+}
+
+.event-address {
+    color: #333333; /* Gris oscuro para direcciones */
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+}
+
+.event-note {
+    margin: 1rem 0;
+    font-style: italic;
+    color: var(--verde-eucalipto); /* Verde oscuro para contraste */
+    font-weight: 600;
+}
+
+.event-suggestion {
+    margin: 0.8rem 0;
+    font-size: 0.95rem;
+    color: #555555; /* Gris medio oscuro para mejor contraste */
+}
+
+.map-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.8rem;
+}
+
+.btn-map {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background: var(--verde-eucalipto);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(74, 107, 84, 0.3);
+}
+
+.btn-map:hover {
+    background: var(--dorado-elegante);
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.4);
+}
+
+.btn-waze {
+    background: var(--verde-salvia);
+}
+
+.btn-waze:hover {
+    background: var(--dorado-elegante);
+}
+
+.dress-code-text {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #000000; /* Negro para texto sobre fondo crema */
+    margin-top: 0.5rem;
+}
+
+/* ===================================
+   MESA DE REGALOS
+   =================================== */
+.gifts-section {
+    background: var(--crema-calido);
+    padding: 5rem 2rem;
+}
+
+.gifts-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    color: #333333; /* Gris oscuro para mejor contraste sobre fondo crema */
+}
+
+.gifts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.gift-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    border: 1px solid rgba(201, 184, 163, 0.3);
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.gift-card:hover {
+    transform: translateY(-10px) rotate(1deg);
+    box-shadow: 0 20px 45px rgba(212, 175, 55, 0.25);
+    border-color: var(--dorado-elegante);
+}
+
+.gift-card h3 {
+    font-family: var(--font-serif);
+    font-size: 1.9rem;
+    color: #000000; /* Negro para máximo contraste */
+    margin: 1.5rem 0;
+    font-weight: 600;
+}
+
+.gift-card p {
+    margin: 1rem 0;
+    color: #333333; /* Gris oscuro para texto sobre fondo blanco */
+    line-height: 1.7;
+}
+
+/* ===================================
+   HASHTAG Y REDES SOCIALES
+   =================================== */
+/* Estilos heredados de content-section - sobre fondo crema */
+
+.hashtag-content p {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: #000000;
+}
+
+.hashtag {
+    font-family: var(--font-script);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    margin: 2.5rem 0;
+    color: #000000; /* Negro para máximo contraste sobre cualquier fondo */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+}
+
+.hashtag-description {
+    font-style: italic;
+    margin-top: 1rem;
+}
+
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.social-link {
+    color: #000000; /* Negro para máximo contraste sobre fondo crema */
+    text-decoration: none;
+    font-size: 1.1rem;
+    padding: 1rem 2rem;
+    background: rgba(74, 107, 84, 0.1); /* Fondo verde muy claro */
+    border-radius: 50px;
+    transition: all 0.4s ease;
+    border: 2px solid var(--verde-eucalipto); /* Borde verde oscuro */
+    backdrop-filter: blur(10px);
+    font-weight: 600;
+}
+
+.social-link:hover {
+    background: var(--verde-eucalipto); /* Fondo verde oscuro al hover */
+    color: white; /* Texto blanco al hover */
+    transform: translateY(-5px) scale(1.05);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+/* ===================================
+   CONFIRMACIÓN RSVP
+   =================================== */
+.rsvp-section {
+    background: white;
+    padding: 5rem 2rem;
+}
+
+.rsvp-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+    color: #000000; /* Negro para máximo contraste */
+    font-weight: 600;
+}
+
+.whatsapp-contact {
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.whatsapp-contact > p {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #000000; /* Negro para texto sobre fondo blanco */
+}
+
+.whatsapp-numbers {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.whatsapp-item {
+    text-align: center;
+}
+
+.whatsapp-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #000000; /* Negro para máximo contraste */
+    margin-bottom: 1rem;
+}
+
+.btn-whatsapp {
+    display: inline-block;
+    padding: 1.2rem 2.5rem;
+    background: var(--verde-eucalipto);
+    color: white;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 20px rgba(45, 66, 50, 0.3);
+}
+
+.btn-whatsapp:hover {
+    background: var(--dorado-elegante);
+    transform: translateY(-5px) scale(1.08);
+    box-shadow: 0 15px 40px rgba(184, 147, 32, 0.5);
+}
+
+/* ===================================
+   INFORMACIÓN ADICIONAL
+   =================================== */
+.info-section {
+    background: var(--crema-calido);
+    padding: 5rem 2rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+}
+
+.info-card {
+    text-align: center;
+    padding: 2.5rem;
+    background: white;
+    border-radius: 15px;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(201, 184, 163, 0.3);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.info-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
+    border-color: var(--beige-taupe);
+}
+
+.info-icon {
+    font-size: 3rem;
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    transition: all 0.5s ease;
+}
+
+.info-card:hover .info-icon {
+    transform: scale(1.2) rotate(10deg);
+}
+
+.info-card h3 {
+    font-family: var(--font-serif);
+    color: #000000; /* Negro para máximo contraste */
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.info-card p {
+    color: #333333; /* Gris oscuro para texto sobre fondo blanco */
+    line-height: 1.6;
+}
+
+/* ===================================
+   FOOTER
+   =================================== */
+.footer {
+    background: var(--verde-eucalipto);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+.footer-message {
+    font-family: var(--font-script);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 1.5rem;
+    color: #000000; /* Negro para mejor contraste */
+}
+
+.footer-names {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    color: #000000; /* Blanco puro */
+}
+
+.footer-date {
+    font-size: 1.3rem;
+    margin-bottom: 2rem;
+    letter-spacing: 4px;
+    color: #0c3300; /* Blanco puro */
+}
+
+.footer-credit {
+    font-size: 0.95rem;
+    opacity: 1; /* Sin opacidad para mejor legibilidad */
+    margin-top: 2rem;
+    color: #00240b; /* Blanco puro */
+}
+
+/* ===================================
+   PARENTS HERO SECTION - NUEVA SECCIÓN
+   =================================== */
+.parents-hero {
+    background: var(--crema-calido);
+}
+
+.parents-hero-group {
+    margin: 3rem 0;
+}
+
+.parents-hero-label {
+    font-family: var(--font-sans);
+    font-size: clamp(0.85rem, 2vw, 1.1rem);
+    letter-spacing: 4px;
+    font-weight: 500;
+    color: #1a2820; /* Verde muy oscuro para máximo contraste */
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.parents-hero-names {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 400;
+    line-height: 1.6;
+    color: #000000; /* Negro para nombres sobre fondo crema */
+}
+
+.parents-hero-names p {
+    margin: 0.5rem 0;
+}
+
+.parents-hero-memory {
+    font-size: clamp(0.9rem, 2vw, 1.1rem) !important;
+    font-style: italic;
+    color: #333333 !important; /* Gris oscuro para texto secundario */
+    margin-top: 0.8rem !important;
+    font-family: var(--font-sans) !important;
+    font-weight: 300;
+}
+
+.parents-hero-divider {
+    margin: 3rem 0;
+    opacity: 0;
+    transition: opacity 1s ease-out 1s;
+}
+
+/* Cuando la sección es visible (clase agregada por JS) */
+.parents-hero.visible .parents-hero-divider {
+    opacity: 1;
+}
+
+/* Estilos para letras animadas individualmente */
+.parents-hero-label span,
+.parents-hero-names span,
+.parents-hero-memory span {
+    display: inline-block;
+}
+
+.parents-hero-divider .ampersand-small {
+    font-size: 4rem;
+    opacity: 0.5;
+}
+
+/* Animaciones de desplazamiento horizontal */
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(100px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Responsive para la nueva sección */
+@media (max-width: 768px) {
+    .parents-hero-label {
+        letter-spacing: 2px;
+        font-size: 0.8rem;
+    }
+    
+    .parents-hero-names {
+        font-size: 1.3rem;
+    }
+    
+    .parents-hero-divider .ampersand-small {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .parents-hero-names {
+        font-size: 1.1rem;
+        line-height: 1.8;
+    }
+
+    .parents-hero-names p {
+        padding: 0 0.5rem;
+        word-break: break-word;
+    }
+
+    .quote-message {
+        font-size: 2.5rem;
+        padding: 0 1rem;
+    }
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+@media (max-width: 768px) {
+    .hero-subtitle {
+        letter-spacing: 4px;
+        font-size: 0.7rem;
+    }
+
+    .hero-title {
+        letter-spacing: 6px;
+        font-size: 1.8rem;
+    }
+
+    .couple-names {
+        font-size: 5rem;
+    }
+
+    .date-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .date-day::after,
+    .date-time::before {
+        display: none;
+    }
+
+    /* Fixed decorations responsive */
+    .fixed-background .floral-decoration.top-left,
+    .fixed-background .floral-decoration.bottom-right {
+        width: 200px;
+    }
+
+    .fixed-background .geometric-frame {
+        width: calc(100vw - 40px);
+        height: calc(100vh - 40px);
+        top: 20px;
+        left: 20px;
+    }
+
+    section {
+        padding: 3rem 1.5rem;
+    }
+
+    .content-section {
+        padding: 40px 15px;
+    }
+
+    .countdown {
+        gap: 1.5rem;
+    }
+
+    .countdown-item {
+        min-width: 100px;
+        padding: 1.8rem;
+    }
+
+    .event-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .map-buttons {
+        flex-direction: column;
+    }
+
+    .btn-map {
+        width: 100%;
+    }
+
+    .whatsapp-numbers {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content {
+        padding: 1rem;
+    }
+
+    .couple-names {
+        font-size: 5rem;
+    }
+
+    .date-number {
+        font-size: 4rem;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+    }
+
+    .countdown-number {
+        font-size: 2.5rem;
+    }
+
+    .parent-group,
+    .gift-card,
+    .info-card {
+        padding: 1.8rem;
+    }
+
+    /* Mejor responsividad para contenido */
+    .event-card h3 {
+        font-size: 1.5rem;
+    }
+
+    .event-location {
+        font-size: 1.1rem;
+    }
+
+    .event-address {
+        font-size: 0.95rem;
+    }
+
+    .romantic-quote p {
+        font-size: 1.1rem;
+        padding: 0 0.5rem;
+    }
+
+    .rsvp-subtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    .gifts-subtitle {
+        font-size: 1rem;
+        padding: 0 1rem;
+    }
+
+    /* Ajuste para nombres largos */
+    .footer-credit {
+        font-size: 0.85rem;
+        padding: 0 1rem;
+    }
+}
+
+/* ===================================
+   ANIMACIONES ADICIONALES
+   =================================== */
+@keyframes shimmer {
+    0%, 100% { background-position: 0% center; }
+    50% { background-position: 100% center; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.​​​​​​​​​​​​​​​​05); }
+}
+
+/* Aplicar animación suave al cargar elementos */
+.fade-in {
+    animation: fadeUp 0.8s ease-out;
+}
+
+/* ===================================
+   UTILIDADES
+   =================================== */
+.text-center {
+    text-align: center;
+}
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }

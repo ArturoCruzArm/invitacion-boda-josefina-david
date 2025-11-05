@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boda - Paulina & Daniel</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='80'>💍</text></svg>">
+
+    <!-- Fuentes actualizadas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mr+De+Haviland&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Música de fondo -->
+    <audio id="background-music" loop>
+        <source src="musica-fondo.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Botón de música -->
+    <button id="music-toggle" class="music-btn" aria-label="Controlar música">
+        <span id="music-icon">🔇</span>
+    </button>
+
+    <!-- 1. Hero Section INICIAL -->
+    <section class="hero">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">TE INVITAMOS A</p>
+            <h1 class="hero-title">NUESTRA BODA</h1>
+
+            <div class="couple-names-container">
+                <h2 class="couple-names">
+                    Paulina<br>
+                    <span class="ampersand-small">y</span><br>
+                    Daniel
+                </h2>
+            </div>
+
+            <div class="date-container">
+                <p class="date-month">DICIEMBRE</p>
+                <div class="date-row">
+                    <span class="date-day">VIERNES</span>
+                    <span class="date-number">19</span>
+                    <span class="date-time">7:00pm</span>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">↓</div>
+        </div>
+    </section>
+
+    <!-- 2. Parents Hero -->
+    <section class="hero parents-hero">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">CON LA BENDICIÓN DE</p>
+            <h1 class="hero-title">NUESTROS PADRES</h1>
+
+            <div class="parents-hero-group">
+                <h3 class="parents-hero-label">Padres de la Novia</h3>
+                <div class="parents-hero-names">
+                    <p>Martha Esther<br>Hernández Valderrama</p>
+                    <p style="display: flex; align-items: center; justify-content: center; gap: 0.5rem; margin-top: 1rem; flex-wrap: wrap;">
+                        <span>Manuel Carrillo Gallardo</span>
+                        <span style="font-size: 1.3rem; color: var(--dorado-elegante); text-shadow: 0 0 10px rgba(212, 175, 55, 0.5); flex-shrink: 0;" title="En memoria">✝</span>
+                    </p>
+                    <p class="parents-hero-memory">Siempre en nuestros corazones</p>
+                </div>
+            </div>
+
+            <div class="parents-hero-divider">
+                <span class="ampersand-small">&</span>
+            </div>
+
+            <div class="parents-hero-group">
+                <h3 class="parents-hero-label">Padres del Novio</h3>
+                <div class="parents-hero-names">
+                    <p>María de la Cruz<br>Hidalgo</p>
+                    <p style="margin-top: 1rem;">Carlos Daniel<br>Hernández Palma</p>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">↓</div>
+        </div>
+    </section>
+
+    <!-- 3. Quote Hero -->
+    <section class="hero quote-hero">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">CON TODO NUESTRO AMOR</p>
+            <h1 class="hero-title">AGRADECIMIENTO</h1>
+
+            <div class="quote-hero-text">
+                <p class="quote-message">Muchas gracias por compartir este momento tan especial con nosotros. Hemos pasado por muchas cosas pero al final el amor verdadero siempre gana. Y ahora con la bendición de Dios agradecemos que sean testigos de esto maravilloso y especial</p>
+            </div>
+
+            <div class="scroll-indicator">↓</div>
+        </div>
+    </section>
+
+    <!-- 4. Countdown Hero -->
+    <section class="hero countdown-hero">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">NUESTRO GRAN DÍA EN</p>
+            <h1 class="hero-title">CUENTA REGRESIVA</h1>
+
+            <div class="countdown" id="countdown">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Días</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Horas</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minutos</span>
+                </div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Segundos</span>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">↓</div>
+        </div>
+    </section>
+
+    <!-- 5. Event Details Hero - CEREMONIA -->
+    <section class="hero event-hero">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">TE ESPERAMOS EN</p>
+            <h1 class="hero-title">CEREMONIA RELIGIOSA</h1>
+
+            <div class="event-hero-details">
+                <div class="event-icon">⛪</div>
+                <p class="event-time">7:00 PM</p>
+                <p class="event-location">Templo de San Judas Tadeo</p>
+                <p class="event-address">Av Roma s/n, Andrade<br>37020 León de los Aldama, Gto.</p>
+                <p class="event-note">✨ Todos pueden asistir</p>
+                <p class="event-suggestion">⏰ Sugerimos llegar 15 minutos antes</p>
+                <div class="map-buttons">
+                    <a href="https://www.google.com/maps?q=21.11162879508956,-101.67137137651461" target="_blank" class="btn-map">
+                        🗺️ Google Maps
+                    </a>
+                    <a href="https://www.waze.com/ul?ll=21.11162879508956,-101.67137137651461&navigate=yes" target="_blank" class="btn-map btn-waze">
+                        🚗 Waze
+                    </a>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">↓</div>
+        </div>
+    </section>
+
+    <!-- 6. Recepción Hero -->
+    <section class="hero reception-hero">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">CELEBREMOS EN</p>
+            <h1 class="hero-title">RECEPCIÓN</h1>
+
+            <div class="event-hero-details">
+                <div class="event-icon">🎉</div>
+                <p class="event-time">9:30 PM - 2:00 AM</p>
+                <p class="event-location">Salón De Eventos Laja</p>
+                <p class="event-address">Blvd. Campestre 79, Peñitas<br>37180 León de los Aldama, Gto.</p>
+                <p class="event-suggestion">⏰ Sugerimos llegar 15 minutos antes</p>
+                <div class="map-buttons">
+                    <a href="https://www.google.com/maps?q=21.147224894292776,-101.68200812396928" target="_blank" class="btn-map">
+                        🗺️ Google Maps
+                    </a>
+                    <a href="https://www.waze.com/ul?ll=21.147224894292776,-101.68200812396928&navigate=yes" target="_blank" class="btn-map btn-waze">
+                        🚗 Waze
+                    </a>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">↓</div>
+        </div>
+    </section>
+
+    <!-- 7. Dress Code Hero -->
+    <section class="hero dresscode-hero">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">CÓDIGO DE</p>
+            <h1 class="hero-title">VESTIMENTA</h1>
+
+            <div class="dresscode-content">
+                <div class="event-icon">👔</div>
+                <p class="dress-code-text">Formal</p>
+            </div>
+
+            <div class="scroll-indicator">↓</div>
+        </div>
+    </section>
+
+    <!-- 8. Gifts Hero -->
+    <section class="hero gifts-hero">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">SI DESEAS OBSEQUIARNOS</p>
+            <h1 class="hero-title">MESA DE REGALOS</h1>
+
+            <p class="gifts-subtitle">Tu presencia es nuestro mejor regalo</p>
+
+            <div class="gifts-hero-content">
+                <div class="event-icon">💝</div>
+                <h3>Lluvia de Sobres</h3>
+                <p>Puedes obsequiarnos un sobre el día del evento</p>
+            </div>
+
+            <div class="scroll-indicator">↓</div>
+        </div>
+    </section>
+
+    <!-- 9. Social Media Hero -->
+    <section class="hero social-hero">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">QUEREMOS VER TUS FOTOS</p>
+            <h1 class="hero-title">COMPARTE CON NOSOTROS</h1>
+
+            <p class="social-subtitle">Usa nuestro hashtag en redes sociales</p>
+            <h3 class="hashtag">#PaulinaYDaniel2025</h3>
+
+            <div class="social-links">
+                <a href="https://www.facebook.com/picoo.hernandez" target="_blank" class="social-link">
+                    📘 Facebook
+                </a>
+                <a href="https://www.instagram.com/danielitopicoo/" target="_blank" class="social-link">
+                    📷 Instagram
+                </a>
+                <a href="https://www.tiktok.com/@danielitopicoohernandez" target="_blank" class="social-link">
+                    🎵 TikTok
+                </a>
+            </div>
+
+            <div class="scroll-indicator">↓</div>
+        </div>
+    </section>
+
+    <!-- 10. RSVP Hero -->
+    <section class="hero rsvp-hero">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">NECESITAMOS SABER</p>
+            <h1 class="hero-title">CONFIRMACIÓN</h1>
+
+            <p class="rsvp-subtitle">Por favor confirma tu asistencia antes del 15 de noviembre de 2025</p>
+
+            <div class="whatsapp-numbers">
+                <div class="whatsapp-item">
+                    <p class="whatsapp-name">💍 Daniel</p>
+                    <a href="https://wa.me/524772891223?text=Hola,%20confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Paulina%20y%20Daniel" target="_blank" class="btn-whatsapp">
+                        📱 477-289-1223
+                    </a>
+                </div>
+                <div class="whatsapp-item">
+                    <p class="whatsapp-name">💍 Paulina</p>
+                    <a href="https://wa.me/524773766078?text=Hola,%20confirmo%20mi%20asistencia%20a%20la%20boda%20de%20Paulina%20y%20Daniel" target="_blank" class="btn-whatsapp">
+                        📱 477-376-6078
+                    </a>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">↓</div>
+        </div>
+    </section>
+
+    <!-- 11. Info Hero -->
+    <section class="hero info-hero">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+
+        <div class="hero-content">
+            <p class="hero-subtitle">DETALLES QUE DEBES SABER</p>
+            <h1 class="hero-title">INFORMACIÓN</h1>
+
+            <div class="info-grid">
+                <div class="info-card">
+                    <div class="info-icon">🎵</div>
+                    <h3>Música</h3>
+                    <p>¡Habrá música en vivo y DJ!</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🍽️</div>
+                    <h3>Comida y Bebida</h3>
+                    <p>Cena completa y barra libre</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">🅿️</div>
+                    <h3>Estacionamiento</h3>
+                    <p>Habrá estacionamiento disponible</p>
+                </div>
+                <div class="info-card">
+                    <div class="info-icon">💒</div>
+                    <h3>Ceremonia</h3>
+                    <p>Todos pueden asistir</p>
+                </div>
+            </div>
+
+            <div class="scroll-indicator">↓</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-message">¡Gracias por acompañarnos en este día tan especial!</p>
+            <p class="footer-names">Paulina & Daniel</p>
+            <p class="footer-date">19.12.2025</p>
+            <p class="footer-credit">Fotografía y Video: Foro 7 - Arturo Cruz - 477-920-3776</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
