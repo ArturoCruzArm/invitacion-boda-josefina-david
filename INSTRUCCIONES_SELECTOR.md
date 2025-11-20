@@ -31,23 +31,36 @@ Una vez convertidas las fotos:
 2. Verás todas las fotos en una galería elegante
 3. Haz clic en cualquier foto para verla en grande
 
-### 3. Seleccionar fotos
+### 3. Seleccionar fotos y categorías
 
 - **Clic en una foto**: Abre el visor de pantalla completa
-- **Botón "Seleccionar esta foto"**: Marca/desmarca la foto actual
+- **Selecciona una o varias categorías** para cada foto:
+  - 📸 **Ampliación** - Para ampliar e imprimir en gran tamaño
+  - 🖼️ **Impresión** - Para imprimir en tamaño estándar
+  - 📱 **Redes Sociales** - Para compartir en redes sociales
+  - 💌 **Inv. Web** - Para usar en la invitación digital
+  - 🗑️ **Descartar** - Fotos que no deseas usar
+- **Comentarios**: Puedes agregar notas de edición para cada foto
 - **Flechas izquierda/derecha**: Navegar entre fotos
 - **ESC**: Cerrar el visor
-- **Contador superior izquierdo**: Muestra cuántas fotos has seleccionado
+- **Estadísticas en tiempo real**: Muestra cuántas fotos hay en cada categoría
 
-**Límite:** Puedes seleccionar hasta **200 fotos**.
+### 4. Filtrar y visualizar
 
-### 4. Exportar selección
+- Usa los **botones de filtro** para ver solo fotos de una categoría específica
+- El filtro "Todas las Fotos" muestra toda la galería
 
-Cuando termines de seleccionar:
+### 5. Exportar selección
 
-1. Haz clic en el botón **"Exportar selección"** (esquina inferior derecha)
-2. Se descargará un archivo `fotos-seleccionadas-josefina-david.txt`
-3. Este archivo contiene la lista de fotos seleccionadas
+Cuando termines de categorizar:
+
+1. Haz clic en el botón **"Enviar por WhatsApp"** (color verde)
+2. Se abrirá WhatsApp automáticamente con tu selección formateada
+3. El mensaje incluye:
+   - Resumen general con totales por categoría
+   - Lista detallada de fotos por categoría
+   - Comentarios y ediciones solicitadas
+   - Fecha de generación
 
 ### 5. Subir a GitHub Pages
 
@@ -89,13 +102,16 @@ invitacion-boda-josefina-david/
 ## 🎨 Características del selector
 
 - ✨ Diseño elegante que combina con la invitación
-- 🎵 Música de fondo
+- 🏷️ Sistema de categorías múltiples por foto
+- 📊 Estadísticas en tiempo real
+- 🔍 Filtros por categoría
+- 💬 Comentarios y notas de edición
 - 📱 Totalmente responsive (funciona en móviles)
 - ⌨️ Navegación con teclado
 - 👆 Soporte para gestos táctiles
-- 💾 Exportación de selección a archivo de texto
+- 📲 Envío directo por WhatsApp
 - 🖼️ Visor de pantalla completa
-- ✅ Indicadores visuales de fotos seleccionadas
+- ✅ Badges visuales en cada foto
 
 ## 🔄 Agregar más fotos después
 
