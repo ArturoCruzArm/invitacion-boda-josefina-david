@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Selección de Fotos - Josefina & David</title>
+    <title>Selector de Fotos - Josefina & David</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='80'>💍</text></svg>">
 
     <!-- Fuentes -->
@@ -12,10 +12,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Mr+De+Haviland&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
-        /* Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         :root {
             --crema-calido: #F8F6F0;
             --verde-eucalipto: #2d4232;
@@ -30,231 +35,265 @@
             --font-sans: 'Montserrat', sans-serif;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
         body {
             font-family: var(--font-sans);
             background: linear-gradient(135deg, var(--crema-calido) 0%, var(--blanco-floral) 100%);
             color: var(--texto-oscuro);
-            overflow-x: hidden;
             min-height: 100vh;
-        }
-
-        /* Decoraciones fijas de fondo */
-        .fixed-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .floral-decoration {
-            position: absolute;
-            opacity: 0.6;
-        }
-
-        .floral-decoration.top-left {
-            top: 0;
-            left: 0;
-            width: 300px;
-            height: 300px;
-        }
-
-        .floral-decoration.bottom-right {
-            bottom: 0;
-            right: 0;
-            width: 300px;
-            height: 300px;
-        }
-
-        .floral-decoration img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
-        .geometric-frame {
-            position: absolute;
-            top: 40px;
-            left: 40px;
-            right: 40px;
-            bottom: 40px;
-            border: 2px solid var(--dorado-elegante);
-            opacity: 0.3;
-            pointer-events: none;
+            user-select: none;
         }
 
         /* Header */
-        header {
-            position: relative;
-            z-index: 10;
+        .header {
             text-align: center;
-            padding: 80px 20px 60px;
-            background: rgba(248, 246, 240, 0.95);
+            padding: 60px 20px 40px;
+            background: rgba(255, 255, 255, 0.9);
             box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            position: relative;
         }
 
-        header h1 {
+        .header::before,
+        .header::after {
+            content: '🌿';
+            position: absolute;
+            font-size: 3em;
+            opacity: 0.3;
+        }
+
+        .header::before {
+            left: 40px;
+            top: 40px;
+        }
+
+        .header::after {
+            right: 40px;
+            top: 40px;
+        }
+
+        .main-title {
             font-family: var(--font-script);
-            font-size: 4em;
+            font-size: clamp(3rem, 8vw, 5rem);
             color: var(--verde-eucalipto);
             margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        header .subtitle {
+        .subtitle {
             font-family: var(--font-serif);
-            font-size: 1.5em;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
             color: var(--beige-taupe);
-            letter-spacing: 3px;
+            margin-bottom: 30px;
+            letter-spacing: 2px;
             text-transform: uppercase;
-            margin-bottom: 20px;
         }
 
-        header .info {
-            font-family: var(--font-sans);
-            font-size: 1em;
+        .instructions {
+            max-width: 900px;
+            margin: 0 auto;
             color: var(--texto-medio);
-            max-width: 800px;
-            margin: 20px auto;
             line-height: 1.8;
+            font-size: 1rem;
         }
 
-        /* Botón de música */
-        .music-btn {
-            position: fixed;
-            top: 30px;
-            right: 30px;
-            z-index: 1000;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            border: 2px solid var(--dorado-elegante);
-            background: linear-gradient(135deg, var(--verde-eucalipto) 0%, var(--verde-salvia) 100%);
-            color: var(--blanco-floral);
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .instructions strong {
+            color: var(--verde-eucalipto);
         }
 
-        .music-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 30px rgba(184, 147, 32, 0.4);
+        .instructions ul {
+            list-style: none;
+            margin-top: 15px;
         }
 
-        .music-btn.playing {
-            animation: pulse 2s infinite;
+        .instructions li {
+            padding: 5px 0;
         }
 
-        @keyframes pulse {
-            0%, 100% {
-                box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            }
-            50% {
-                box-shadow: 0 4px 30px rgba(184, 147, 32, 0.6);
-            }
-        }
-
-        /* Contador de selección */
-        .selection-info {
-            position: fixed;
-            top: 30px;
-            left: 30px;
-            z-index: 1000;
-            background: linear-gradient(135deg, var(--verde-eucalipto) 0%, var(--verde-salvia) 100%);
-            color: var(--blanco-floral);
-            padding: 15px 25px;
-            border-radius: 30px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            font-family: var(--font-sans);
-            font-size: 1.1em;
-            font-weight: 500;
-        }
-
-        /* Galería */
-        .gallery-container {
-            position: relative;
-            z-index: 10;
+        /* Control Panel */
+        .control-panel {
             max-width: 1400px;
-            margin: 60px auto;
-            padding: 0 40px 80px;
+            margin: 40px auto;
+            padding: 0 20px;
         }
 
-        .gallery {
+        .stats-row {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 25px;
-            padding: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
-        .gallery-item {
-            position: relative;
-            overflow: hidden;
+        .stat-card {
+            background: white;
+            padding: 25px 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            aspect-ratio: 1;
-            background: var(--blanco-floral);
-        }
-
-        .gallery-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 30px rgba(184, 147, 32, 0.4);
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+            text-align: center;
+            border: 2px solid var(--dorado-elegante);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.05);
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(184, 147, 32, 0.3);
         }
 
-        .gallery-item.selected {
-            border: 4px solid var(--dorado-elegante);
-            box-shadow: 0 0 30px rgba(184, 147, 32, 0.6);
+        .stat-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
         }
 
-        .gallery-item.selected::after {
-            content: '\f00c';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--dorado-elegante);
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
+        .stat-info h3 {
+            font-family: var(--font-serif);
+            color: var(--verde-eucalipto);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-count {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dorado-elegante);
+        }
+
+        /* Action Buttons */
+        .action-buttons {
             display: flex;
-            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
             justify-content: center;
-            font-size: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            margin: 25px 0;
         }
 
-        /* Lightbox */
-        .lightbox {
+        .btn {
+            padding: 12px 25px;
+            border: 2px solid var(--verde-eucalipto);
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: white;
+            color: var(--verde-eucalipto);
+            font-family: var(--font-sans);
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(45, 66, 50, 0.3);
+        }
+
+        .btn-filter {
+            background: white;
+            color: var(--verde-eucalipto);
+        }
+
+        .btn-filter.active {
+            background: var(--verde-eucalipto);
+            color: white;
+        }
+
+        .btn-export {
+            background: #25D366;
+            color: white;
+            border-color: #25D366;
+        }
+
+        .btn-export:hover {
+            background: #20BA5A;
+        }
+
+        .btn-clear {
+            background: #e74c3c;
+            color: white;
+            border-color: #e74c3c;
+        }
+
+        .btn-clear:hover {
+            background: #c0392b;
+        }
+
+        /* Gallery */
+        .gallery-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .photos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .photo-card {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            background: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .photo-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(184, 147, 32, 0.4);
+            border-color: var(--dorado-elegante);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-number {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            border: 2px solid var(--dorado-elegante);
+        }
+
+        .photo-badges {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .badge {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge.ampliacion { background: #9c27b0; border: 2px solid #ce93d8; }
+        .badge.impresion { background: #2196f3; border: 2px solid #90caf9; }
+        .badge.redes_sociales { background: #4caf50; border: 2px solid #a5d6a7; }
+        .badge.invitaciones_web { background: #ff9100; border: 2px solid #ffcc80; }
+        .badge.descartada { background: #f44336; border: 2px solid #ef9a9a; }
+
+        /* Modal */
+        .modal {
             display: none;
             position: fixed;
             top: 0;
@@ -263,621 +302,646 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.95);
             z-index: 2000;
-            justify-content: center;
-            align-items: center;
+            overflow-y: auto;
         }
 
-        .lightbox.active {
+        .modal.active {
             display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
         }
 
-        .lightbox-content {
+        .modal-content {
+            background: var(--crema-calido);
+            border-radius: 20px;
+            max-width: 1200px;
+            width: 100%;
+            max-height: 95vh;
+            overflow-y: auto;
             position: relative;
-            max-width: 90%;
-            max-height: 90%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: 3px solid var(--dorado-elegante);
         }
 
-        .lightbox img {
-            max-width: 100%;
-            max-height: 90vh;
-            object-fit: contain;
-            border-radius: 8px;
-            box-shadow: 0 0 50px rgba(184, 147, 32, 0.3);
-        }
-
-        .lightbox-close {
+        .modal-close {
             position: absolute;
-            top: 30px;
-            right: 40px;
-            font-size: 40px;
-            color: white;
+            top: 15px;
+            right: 20px;
+            font-size: 2.5rem;
+            color: var(--verde-eucalipto);
             cursor: pointer;
-            z-index: 2001;
-            background: rgba(0,0,0,0.5);
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-            border: 2px solid var(--dorado-elegante);
+            z-index: 10;
+            transition: transform 0.3s ease;
         }
 
-        .lightbox-close:hover {
-            background: var(--verde-eucalipto);
+        .modal-close:hover {
+            transform: scale(1.2);
+            color: var(--dorado-elegante);
         }
 
-        .lightbox-nav {
+        .modal-nav {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 50px;
-            color: white;
-            cursor: pointer;
-            padding: 20px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-            user-select: none;
-            border: 2px solid var(--dorado-elegante);
-        }
-
-        .lightbox-nav:hover {
             background: var(--verde-eucalipto);
-        }
-
-        .lightbox-prev {
-            left: 30px;
-        }
-
-        .lightbox-next {
-            right: 30px;
-        }
-
-        .lightbox-counter {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 18px;
-            background: rgba(0,0,0,0.7);
-            padding: 12px 30px;
-            border-radius: 30px;
-            font-family: var(--font-sans);
-            border: 2px solid var(--dorado-elegante);
-        }
-
-        .lightbox-select-btn {
-            position: absolute;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, var(--verde-eucalipto) 0%, var(--verde-salvia) 100%);
             color: white;
             border: 2px solid var(--dorado-elegante);
-            padding: 15px 40px;
-            border-radius: 30px;
-            font-size: 18px;
-            font-family: var(--font-sans);
-            font-weight: 600;
+            font-size: 2.5rem;
+            padding: 15px 12px;
             cursor: pointer;
+            z-index: 10;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            border-radius: 10px;
         }
 
-        .lightbox-select-btn:hover {
-            transform: translateX(-50%) scale(1.05);
-            box-shadow: 0 6px 30px rgba(184, 147, 32, 0.5);
+        .modal-nav:hover {
+            background: var(--dorado-elegante);
+            color: var(--verde-eucalipto);
         }
 
-        .lightbox-select-btn.selected {
-            background: linear-gradient(135deg, var(--dorado-elegante) 0%, #d4a734 100%);
+        .modal-nav-prev { left: 10px; }
+        .modal-nav-next { right: 10px; }
+
+        .modal-body {
+            padding: 20px;
         }
 
-        /* Botones de acción */
-        .action-buttons {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 1000;
-            display: flex;
-            flex-direction: column;
+        .modal-image-container {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .modal-image-container img {
+            width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .modal-photo-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border: 2px solid var(--dorado-elegante);
+        }
+
+        .modal-options {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            border: 2px solid var(--dorado-elegante);
+        }
+
+        .modal-options h3 {
+            font-family: var(--font-serif);
+            color: var(--verde-eucalipto);
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .modal-subtitle {
+            text-align: center;
+            color: var(--beige-taupe);
+            margin-bottom: 25px;
+            font-size: 1.1rem;
+        }
+
+        .option-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 15px;
+            margin-bottom: 25px;
         }
 
-        .action-btn {
-            background: linear-gradient(135deg, var(--verde-eucalipto) 0%, var(--verde-salvia) 100%);
-            color: white;
-            border: 2px solid var(--dorado-elegante);
-            padding: 15px 30px;
-            border-radius: 30px;
-            font-size: 16px;
-            font-family: var(--font-sans);
-            font-weight: 600;
+        .option-btn {
+            background: white;
+            border: 3px solid var(--verde-eucalipto);
+            padding: 20px 15px;
+            border-radius: 12px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-            display: flex;
-            align-items: center;
-            gap: 10px;
+            text-align: center;
+            color: var(--verde-eucalipto);
         }
 
-        .action-btn:hover {
+        .option-btn:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 30px rgba(184, 147, 32, 0.5);
+            box-shadow: 0 4px 15px rgba(45, 66, 50, 0.3);
         }
 
-        .action-btn i {
-            font-size: 20px;
+        .option-btn.selected {
+            background: var(--verde-eucalipto);
+            color: white;
+            border-color: var(--dorado-elegante);
+        }
+
+        .option-icon {
+            display: block;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .option-label {
+            font-weight: 700;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .edit-section {
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px solid var(--dorado-elegante);
+        }
+
+        .edit-section label {
+            display: block;
+            color: var(--verde-eucalipto);
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .edit-section textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 15px;
+            border-radius: 8px;
+            border: 2px solid var(--verde-eucalipto);
+            background: var(--blanco-floral);
+            color: var(--texto-oscuro);
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            resize: vertical;
+        }
+
+        .edit-section textarea:focus {
+            outline: none;
+            border-color: var(--dorado-elegante);
         }
 
         /* Footer */
         footer {
-            position: relative;
-            z-index: 10;
             text-align: center;
             padding: 40px 20px;
-            background: rgba(248, 246, 240, 0.95);
+            background: rgba(255, 255, 255, 0.9);
+            margin-top: 60px;
             font-family: var(--font-serif);
             color: var(--texto-medio);
-            font-style: italic;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            header h1 {
-                font-size: 2.5em;
+            .header::before,
+            .header::after {
+                display: none;
             }
 
-            header .subtitle {
-                font-size: 1em;
-            }
-
-            .gallery {
+            .photos-grid {
                 grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
                 gap: 15px;
             }
 
-            .selection-info {
-                top: 20px;
-                left: 20px;
-                padding: 10px 20px;
-                font-size: 0.9em;
+            .photo-card img {
+                height: 200px;
             }
 
-            .music-btn {
-                top: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
+            .modal-nav {
+                font-size: 2rem;
+                padding: 10px 8px;
             }
 
-            .lightbox-nav {
-                font-size: 30px;
-                width: 50px;
-                height: 50px;
-                padding: 10px;
-            }
-
-            .lightbox-prev {
-                left: 10px;
-            }
-
-            .lightbox-next {
-                right: 10px;
-            }
-
-            .lightbox-close {
-                top: 20px;
-                right: 20px;
-                font-size: 30px;
-                width: 40px;
-                height: 40px;
-            }
-
-            .action-buttons {
-                bottom: 20px;
-                right: 20px;
-            }
-
-            .action-btn {
-                padding: 12px 20px;
-                font-size: 14px;
-            }
-
-            .geometric-frame {
-                top: 20px;
-                left: 20px;
-                right: 20px;
-                bottom: 20px;
-            }
-
-            .floral-decoration.top-left,
-            .floral-decoration.bottom-right {
-                width: 150px;
-                height: 150px;
+            .option-buttons {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Música de fondo -->
-    <audio id="background-music" loop>
-        <source src="musica-fondo.mp3" type="audio/mpeg">
-    </audio>
-
-    <!-- Botón de música -->
-    <button id="music-toggle" class="music-btn" aria-label="Controlar música">
-        <i id="music-icon" class="fas fa-volume-mute"></i>
-    </button>
-
-    <!-- Contador de selección -->
-    <div class="selection-info">
-        <i class="fas fa-check-circle"></i> <span id="selection-count">0</span> fotos seleccionadas
-    </div>
-
-    <!-- Decoraciones fijas -->
-    <div class="fixed-background">
-        <div class="floral-decoration top-left">
-            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
-        </div>
-        <div class="floral-decoration bottom-right">
-            <img src="rosa-derecha.png" alt="" aria-hidden="true">
-        </div>
-        <div class="geometric-frame"></div>
-    </div>
-
     <!-- Header -->
-    <header>
-        <p class="subtitle">SELECCIÓN DE FOTOS</p>
-        <h1>Josefina & David</h1>
-        <p class="info">
-            Bienvenida Josefina, por favor selecciona las fotos que deseas incluir.
-            Haz clic en una foto para verla en grande y seleccionarla.
-            Puedes elegir hasta 200 fotos entre las fotos de la boda civil y religiosa.
-        </p>
+    <header class="header">
+        <h1 class="main-title">Selector de Fotos</h1>
+        <p class="subtitle">Josefina & David</p>
+        <div class="instructions">
+            <p><strong>Instrucciones:</strong> Haz clic en cada foto para seleccionar su uso. Puedes elegir múltiples opciones para cada foto.</p>
+            <p><strong>Categorías disponibles:</strong></p>
+            <ul>
+                <li>📸 <strong>Ampliación</strong> - Para ampliar e imprimir en gran tamaño</li>
+                <li>🖼️ <strong>Impresión</strong> - Para imprimir en tamaño estándar</li>
+                <li>📱 <strong>Redes Sociales</strong> - Para compartir en redes sociales</li>
+                <li>💌 <strong>Invitaciones Web</strong> - Para usar en la invitación digital</li>
+                <li>🗑️ <strong>Descartar</strong> - Fotos que no deseas usar</li>
+            </ul>
+            <p style="margin-top: 15px;"><strong><i class="fab fa-whatsapp"></i> Importante:</strong> Cuando presiones <strong>"Enviar por WhatsApp"</strong>, se abrirá automáticamente con tu selección lista para enviar.</p>
+        </div>
     </header>
 
-    <!-- Galería -->
-    <div class="gallery-container">
-        <div class="gallery" id="gallery">
-            <!-- Las imágenes se generarán con JavaScript -->
+    <!-- Control Panel -->
+    <div class="control-panel">
+        <!-- Stats -->
+        <div class="stats-row">
+            <div class="stat-card">
+                <div class="stat-icon">📸</div>
+                <div class="stat-info">
+                    <h3>Ampliación</h3>
+                    <div class="stat-count" id="count-ampliacion">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🖼️</div>
+                <div class="stat-info">
+                    <h3>Impresión</h3>
+                    <div class="stat-count" id="count-impresion">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">📱</div>
+                <div class="stat-info">
+                    <h3>Redes Sociales</h3>
+                    <div class="stat-count" id="count-redes_sociales">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">💌</div>
+                <div class="stat-info">
+                    <h3>Inv. Web</h3>
+                    <div class="stat-count" id="count-invitaciones_web">0</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🗑️</div>
+                <div class="stat-info">
+                    <h3>Descartadas</h3>
+                    <div class="stat-count" id="count-descartada">0</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+            <button class="btn btn-filter active" data-filter="all">
+                <i class="fas fa-images"></i> Todas las Fotos
+            </button>
+            <button class="btn btn-filter" data-filter="ampliacion">
+                <i class="fas fa-expand"></i> Ampliación
+            </button>
+            <button class="btn btn-filter" data-filter="impresion">
+                <i class="fas fa-print"></i> Impresión
+            </button>
+            <button class="btn btn-filter" data-filter="redes_sociales">
+                <i class="fas fa-share-alt"></i> Redes Sociales
+            </button>
+            <button class="btn btn-filter" data-filter="invitaciones_web">
+                <i class="fas fa-envelope"></i> Inv. Web
+            </button>
+            <button class="btn btn-filter" data-filter="descartada">
+                <i class="fas fa-trash"></i> Descartadas
+            </button>
+            <button class="btn btn-export" onclick="exportarSeleccion()">
+                <i class="fab fa-whatsapp"></i> Enviar por WhatsApp
+            </button>
+            <button class="btn btn-clear" onclick="limpiarSeleccion()">
+                <i class="fas fa-eraser"></i> Limpiar Todo
+            </button>
         </div>
     </div>
 
-    <!-- Lightbox -->
-    <div class="lightbox" id="lightbox">
-        <span class="lightbox-close" id="lightbox-close">&times;</span>
-        <div class="lightbox-nav lightbox-prev" id="lightbox-prev">&#8249;</div>
-        <div class="lightbox-content">
-            <img id="lightbox-img" src="" alt="">
+    <!-- Gallery -->
+    <section class="gallery-section">
+        <div class="photos-grid" id="photosGrid">
+            <!-- Photos will be loaded here -->
         </div>
-        <div class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</div>
-        <button class="lightbox-select-btn" id="lightbox-select">Seleccionar esta foto</button>
-        <div class="lightbox-counter" id="lightbox-counter"></div>
-    </div>
+    </section>
 
-    <!-- Botones de acción -->
-    <div class="action-buttons">
-        <button class="action-btn" id="export-btn">
-            <i class="fas fa-download"></i> Exportar selección
-        </button>
-        <button class="action-btn" id="clear-btn">
-            <i class="fas fa-trash"></i> Limpiar selección
-        </button>
+    <!-- Modal -->
+    <div class="modal" id="photoModal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeModal()">&times;</span>
+            <button class="modal-nav modal-nav-prev" onclick="navigatePhoto(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="modal-nav modal-nav-next" onclick="navigatePhoto(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+
+            <div class="modal-body">
+                <div class="modal-image-container">
+                    <img id="modalImage" src="" alt="">
+                    <div class="modal-photo-number" id="modalPhotoNumber">#001</div>
+                </div>
+
+                <div class="modal-options">
+                    <h3>Selecciona el uso de esta foto</h3>
+                    <p class="modal-subtitle">Puedes elegir una o varias opciones</p>
+
+                    <div class="option-buttons">
+                        <div class="option-btn" data-option="ampliacion">
+                            <span class="option-icon">📸</span>
+                            <div class="option-label">Ampliación</div>
+                        </div>
+                        <div class="option-btn" data-option="impresion">
+                            <span class="option-icon">🖼️</span>
+                            <div class="option-label">Impresión</div>
+                        </div>
+                        <div class="option-btn" data-option="redes_sociales">
+                            <span class="option-icon">📱</span>
+                            <div class="option-label">Redes Sociales</div>
+                        </div>
+                        <div class="option-btn" data-option="invitaciones_web">
+                            <span class="option-icon">💌</span>
+                            <div class="option-label">Inv. Web</div>
+                        </div>
+                        <div class="option-btn" data-option="descartada">
+                            <span class="option-icon">🗑️</span>
+                            <div class="option-label">Descartar</div>
+                        </div>
+                    </div>
+
+                    <div class="edit-section">
+                        <label for="editNotes">
+                            <i class="fas fa-edit"></i> Comentarios o Ediciones Requeridas
+                        </label>
+                        <textarea
+                            id="editNotes"
+                            placeholder="Ejemplo: Recortar fondo, mejorar iluminación, eliminar objetos, etc."
+                        ></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p>Recuerdos inolvidables de un día especial</p>
-        <p style="margin-top: 10px; font-size: 0.9em;">Fotografía: Foro 7 - Arturo Cruz</p>
+        <p><strong>Josefina & David</strong> - 15 de Noviembre de 2025</p>
+        <p>Fotografía: Foro 7 - Arturo Cruz - 477-920-3776</p>
     </footer>
 
     <script>
+        // Deshabilitar clic derecho
+        document.addEventListener('contextmenu', e => e.preventDefault());
+        document.addEventListener('dragstart', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+
         // Variables globales
-        // photos se carga desde photos_list.js
-        const maxSelection = 200;
-        let selectedPhotos = new Set();
-        let currentIndex = 0;
-        let musicStarted = false;
+        let currentPhotoIndex = 0;
+        let selections = {};
+        let activeFilter = 'all';
 
-        // Elementos del DOM
-        const gallery = document.getElementById('gallery');
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxClose = document.getElementById('lightbox-close');
-        const lightboxPrev = document.getElementById('lightbox-prev');
-        const lightboxNext = document.getElementById('lightbox-next');
-        const lightboxCounter = document.getElementById('lightbox-counter');
-        const lightboxSelect = document.getElementById('lightbox-select');
-        const selectionCount = document.getElementById('selection-count');
-        const music = document.getElementById('background-music');
-        const musicToggle = document.getElementById('music-toggle');
-        const musicIcon = document.getElementById('music-icon');
-        const exportBtn = document.getElementById('export-btn');
-        const clearBtn = document.getElementById('clear-btn');
+        // Renderizar galería
+        function renderGallery() {
+            const grid = document.getElementById('photosGrid');
+            grid.innerHTML = '';
 
-        // Generar galería desde photos array
-        function generateGallery() {
-            gallery.innerHTML = '';
             if (typeof photos === 'undefined' || photos.length === 0) {
-                gallery.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--beige-taupe); padding: 40px;">No hay fotos disponibles. Por favor ejecuta el script de conversión primero.</p>';
+                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; padding: 40px;">No hay fotos disponibles.</p>';
                 return;
             }
 
             photos.forEach((photo, index) => {
-                const div = document.createElement('div');
-                div.className = 'gallery-item';
-                if (selectedPhotos.has(photo.name)) {
-                    div.classList.add('selected');
-                }
-                div.innerHTML = `<img src="${photo.path}" alt="Foto ${index + 1}" loading="lazy" data-index="${index}">`;
-                gallery.appendChild(div);
-            });
-            attachGalleryListeners();
-        }
-
-        // Actualizar contador de selección
-        function updateSelectionCount() {
-            selectionCount.textContent = selectedPhotos.size;
-        }
-
-        // Actualizar contador del lightbox
-        function updateLightboxCounter() {
-            const totalPhotos = typeof photos !== 'undefined' ? photos.length : 0;
-            lightboxCounter.textContent = `${currentIndex + 1} / ${totalPhotos}`;
-        }
-
-        // Actualizar botón de selección en lightbox
-        function updateSelectButton() {
-            if (typeof photos === 'undefined' || photos.length === 0) return;
-
-            const photo = photos[currentIndex];
-            if (!photo) return;
-
-            if (selectedPhotos.has(photo.name)) {
-                lightboxSelect.textContent = '✓ Foto seleccionada';
-                lightboxSelect.classList.add('selected');
-            } else {
-                lightboxSelect.textContent = 'Seleccionar esta foto';
-                lightboxSelect.classList.remove('selected');
-            }
-        }
-
-        // Mostrar imagen en lightbox
-        function showImage(index) {
-            if (typeof photos === 'undefined' || photos.length === 0) return;
-
-            currentIndex = index;
-            const photo = photos[index];
-            if (!photo) return;
-
-            lightboxImg.src = photo.path;
-            updateLightboxCounter();
-            updateSelectButton();
-        }
-
-        // Alternar selección de foto
-        function toggleSelection(index) {
-            if (typeof photos === 'undefined' || photos.length === 0) return;
-
-            const photo = photos[index];
-            if (!photo) return;
-
-            if (selectedPhotos.has(photo.name)) {
-                selectedPhotos.delete(photo.name);
-            } else {
-                if (selectedPhotos.size >= maxSelection) {
-                    alert(`Solo puedes seleccionar hasta ${maxSelection} fotos.`);
+                if (activeFilter !== 'all' && (!selections[photo.name] || !selections[photo.name].categories.includes(activeFilter))) {
                     return;
                 }
-                selectedPhotos.add(photo.name);
-            }
 
-            updateSelectionCount();
-            updateGalleryItem(index);
-            updateSelectButton();
-        }
+                const card = document.createElement('div');
+                card.className = 'photo-card';
+                card.onclick = () => openModal(index);
 
-        // Actualizar elemento de galería
-        function updateGalleryItem(index) {
-            if (typeof photos === 'undefined' || photos.length === 0) return;
+                const badges = selections[photo.name]?.categories.map(cat =>
+                    `<span class="badge ${cat}">${getCategoryLabel(cat)}</span>`
+                ).join('') || '';
 
-            const photo = photos[index];
-            if (!photo) return;
+                card.innerHTML = `
+                    <img src="${photo.path}" alt="Foto ${index + 1}" loading="lazy">
+                    <div class="photo-number">#${String(index + 1).padStart(3, '0')}</div>
+                    <div class="photo-badges">${badges}</div>
+                `;
 
-            const items = document.querySelectorAll('.gallery-item');
-            if (!items[index]) return;
-
-            if (selectedPhotos.has(photo.name)) {
-                items[index].classList.add('selected');
-            } else {
-                items[index].classList.remove('selected');
-            }
-        }
-
-        // Adjuntar listeners a la galería
-        function attachGalleryListeners() {
-            const galleryItems = document.querySelectorAll('.gallery-item img');
-
-            galleryItems.forEach((item) => {
-                item.addEventListener('click', function() {
-                    const index = parseInt(this.dataset.index);
-                    showImage(index);
-                    lightbox.classList.add('active');
-
-                    // Iniciar música en el primer clic
-                    if (!musicStarted) {
-                        music.play().catch(e => console.log('Error al reproducir música:', e));
-                        musicStarted = true;
-                        musicToggle.classList.add('playing');
-                        musicIcon.classList.remove('fa-volume-mute');
-                        musicIcon.classList.add('fa-volume-up');
-                    }
-                });
+                grid.appendChild(card);
             });
         }
 
-        // Cerrar lightbox
-        lightboxClose.addEventListener('click', () => {
-            lightbox.classList.remove('active');
-        });
+        // Abrir modal
+        function openModal(index) {
+            currentPhotoIndex = index;
+            const photo = photos[index];
 
-        // Cerrar con ESC
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                lightbox.classList.remove('active');
-            }
-        });
+            document.getElementById('modalImage').src = photo.path;
+            document.getElementById('modalPhotoNumber').textContent = `#${String(index + 1).padStart(3, '0')}`;
+            document.getElementById('photoModal').classList.add('active');
 
-        // Navegación
-        lightboxPrev.addEventListener('click', () => {
-            if (typeof photos === 'undefined' || photos.length === 0) return;
-            const totalPhotos = photos.length;
-            currentIndex = (currentIndex - 1 + totalPhotos) % totalPhotos;
-            showImage(currentIndex);
-        });
+            const photoSelections = selections[photo.name] || { categories: [], notes: '' };
 
-        lightboxNext.addEventListener('click', () => {
-            if (typeof photos === 'undefined' || photos.length === 0) return;
-            const totalPhotos = photos.length;
-            currentIndex = (currentIndex + 1) % totalPhotos;
-            showImage(currentIndex);
-        });
-
-        // Navegación con teclado
-        document.addEventListener('keydown', (e) => {
-            if (lightbox.classList.contains('active')) {
-                if (typeof photos === 'undefined' || photos.length === 0) return;
-                const totalPhotos = photos.length;
-
-                if (e.key === 'ArrowLeft') {
-                    currentIndex = (currentIndex - 1 + totalPhotos) % totalPhotos;
-                    showImage(currentIndex);
-                } else if (e.key === 'ArrowRight') {
-                    currentIndex = (currentIndex + 1) % totalPhotos;
-                    showImage(currentIndex);
+            document.querySelectorAll('.option-btn').forEach(btn => {
+                const option = btn.dataset.option;
+                if (photoSelections.categories.includes(option)) {
+                    btn.classList.add('selected');
+                } else {
+                    btn.classList.remove('selected');
                 }
+            });
+
+            document.getElementById('editNotes').value = photoSelections.notes || '';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Cerrar modal
+        function closeModal() {
+            document.getElementById('photoModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Navegar fotos
+        function navigatePhoto(direction) {
+            currentPhotoIndex = (currentPhotoIndex + direction + photos.length) % photos.length;
+            openModal(currentPhotoIndex);
+        }
+
+        // Manejar selección de categorías
+        document.querySelectorAll('.option-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const photo = photos[currentPhotoIndex];
+                const option = this.dataset.option;
+
+                if (!selections[photo.name]) {
+                    selections[photo.name] = { categories: [], notes: '' };
+                }
+
+                const categories = selections[photo.name].categories;
+                const index = categories.indexOf(option);
+
+                if (index > -1) {
+                    categories.splice(index, 1);
+                    this.classList.remove('selected');
+                } else {
+                    categories.push(option);
+                    this.classList.add('selected');
+                }
+
+                updateStats();
+                renderGallery();
+            });
+        });
+
+        // Guardar notas
+        document.getElementById('editNotes').addEventListener('input', function() {
+            const photo = photos[currentPhotoIndex];
+            if (!selections[photo.name]) {
+                selections[photo.name] = { categories: [], notes: '' };
             }
+            selections[photo.name].notes = this.value;
         });
 
-        // Selección desde lightbox
-        lightboxSelect.addEventListener('click', () => {
-            toggleSelection(currentIndex);
+        // Actualizar estadísticas
+        function updateStats() {
+            const counts = {
+                ampliacion: 0,
+                impresion: 0,
+                redes_sociales: 0,
+                invitaciones_web: 0,
+                descartada: 0
+            };
+
+            Object.values(selections).forEach(selection => {
+                selection.categories.forEach(cat => {
+                    if (counts[cat] !== undefined) counts[cat]++;
+                });
+            });
+
+            Object.keys(counts).forEach(cat => {
+                document.getElementById(`count-${cat}`).textContent = counts[cat];
+            });
+
+            return counts;
+        }
+
+        // Filtros
+        document.querySelectorAll('.btn-filter').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.btn-filter').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                activeFilter = this.dataset.filter;
+                renderGallery();
+            });
         });
 
-        // Soporte táctil
-        let touchStartX = 0;
-        let touchEndX = 0;
+        // Exportar selección a WhatsApp
+        function exportarSeleccion() {
+            const stats = updateStats();
 
-        lightbox.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
+            let mensaje = '💍 SELECCIÓN DE FOTOS - BODA JOSEFINA & DAVID\n';
+            mensaje += '═══════════════════════════════════════\n\n';
+            mensaje += `📊 RESUMEN GENERAL:\n`;
+            mensaje += `   Total de fotos: ${photos.length}\n`;
+            mensaje += `   🖼️  Para ampliación: ${stats.ampliacion}\n`;
+            mensaje += `   📸 Para impresión: ${stats.impresion}\n`;
+            mensaje += `   📱 Para redes sociales: ${stats.redes_sociales}\n`;
+            mensaje += `   🌐 Para invitaciones web: ${stats.invitaciones_web}\n`;
+            mensaje += `   ❌ Descartadas: ${stats.descartada}\n\n`;
 
-        lightbox.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
+            const categorias = {
+                ampliacion: '🖼️  AMPLIACIÓN',
+                impresion: '📸 IMPRESIÓN',
+                redes_sociales: '📱 REDES SOCIALES',
+                invitaciones_web: '🌐 INVITACIONES WEB',
+                descartada: '❌ DESCARTADAS'
+            };
 
-        function handleSwipe() {
-            if (typeof photos === 'undefined' || photos.length === 0) return;
-            const totalPhotos = photos.length;
+            Object.keys(categorias).forEach(categoria => {
+                const fotosCategoria = [];
+                photos.forEach((photo, index) => {
+                    const selection = selections[photo.name];
+                    if (selection && selection.categories && selection.categories.includes(categoria)) {
+                        fotosCategoria.push({
+                            numero: index + 1,
+                            nombre: photo.filename
+                        });
+                    }
+                });
 
-            if (touchEndX < touchStartX - 50) {
-                currentIndex = (currentIndex + 1) % totalPhotos;
-                showImage(currentIndex);
+                if (fotosCategoria.length > 0) {
+                    mensaje += `${categorias[categoria]}:\n`;
+                    fotosCategoria.forEach(foto => {
+                        mensaje += `   • #${foto.numero} - ${foto.nombre}\n`;
+                    });
+                    mensaje += `   Total: ${fotosCategoria.length}\n\n`;
+                }
+            });
+
+            // Comentarios
+            const fotosConComentarios = [];
+            photos.forEach((photo, index) => {
+                const selection = selections[photo.name];
+                if (selection && selection.notes && selection.notes.trim() !== '') {
+                    fotosConComentarios.push(`   📸 Foto #${index + 1}: ${selection.notes}`);
+                }
+            });
+
+            if (fotosConComentarios.length > 0) {
+                mensaje += `\n💬 COMENTARIOS Y EDICIONES:\n`;
+                mensaje += fotosConComentarios.join('\n') + '\n';
             }
-            if (touchEndX > touchStartX + 50) {
-                currentIndex = (currentIndex - 1 + totalPhotos) % totalPhotos;
-                showImage(currentIndex);
+
+            mensaje += `\n📅 Generado el: ${new Date().toLocaleString('es-MX')}\n`;
+
+            const mensajeCodificado = encodeURIComponent(mensaje);
+            const whatsappURL = `https://wa.me/524779203776?text=${mensajeCodificado}`;
+
+            window.open(whatsappURL, '_blank');
+            alert('Abriendo WhatsApp para enviar tu selección...');
+        }
+
+        // Limpiar selección
+        function limpiarSeleccion() {
+            if (confirm('¿Estás segura de que quieres limpiar toda la selección?')) {
+                selections = {};
+                updateStats();
+                renderGallery();
+                alert('Selección limpiada');
             }
         }
 
-        // Control de música
-        musicToggle.addEventListener('click', () => {
-            if (music.paused) {
-                music.play();
-                musicToggle.classList.add('playing');
-                musicIcon.classList.remove('fa-volume-mute');
-                musicIcon.classList.add('fa-volume-up');
-            } else {
-                music.pause();
-                musicToggle.classList.remove('playing');
-                musicIcon.classList.remove('fa-volume-up');
-                musicIcon.classList.add('fa-volume-mute');
-            }
-        });
+        // Obtener etiqueta de categoría
+        function getCategoryLabel(category) {
+            const labels = {
+                ampliacion: 'Ampliación',
+                impresion: 'Impresión',
+                redes_sociales: 'Redes',
+                invitaciones_web: 'Inv. Web',
+                descartada: 'Descartada'
+            };
+            return labels[category] || category;
+        }
 
-        // Exportar selección
-        exportBtn.addEventListener('click', () => {
-            if (selectedPhotos.size === 0) {
-                alert('No has seleccionado ninguna foto.');
-                return;
-            }
-
-            const selectedArray = Array.from(selectedPhotos).sort();
-            const text = selectedArray.join('\n');
-
-            // Crear y descargar archivo
-            const blob = new Blob([text], { type: 'text/plain' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'fotos-seleccionadas-josefina-david.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-
-            alert(`${selectedPhotos.size} fotos exportadas correctamente.`);
-        });
-
-        // Limpiar selección
-        clearBtn.addEventListener('click', () => {
-            if (confirm('¿Estás segura de que deseas limpiar toda la selección?')) {
-                selectedPhotos.clear();
-                updateSelectionCount();
-                document.querySelectorAll('.gallery-item').forEach(item => {
-                    item.classList.remove('selected');
-                });
-                updateSelectButton();
-            }
-        });
-
-        // Cerrar lightbox al hacer clic fuera
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                lightbox.classList.remove('active');
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            if (document.getElementById('photoModal').classList.contains('active')) {
+                if (e.key === 'ArrowLeft') navigatePhoto(-1);
+                else if (e.key === 'ArrowRight') navigatePhoto(1);
+                else if (e.key === 'Escape') closeModal();
             }
         });
 
         // Inicialización
         window.addEventListener('DOMContentLoaded', () => {
-            // Esperar a que se cargue photos_list.js
             if (typeof photos !== 'undefined' && photos.length > 0) {
-                generateGallery();
-                updateSelectionCount();
+                renderGallery();
+                updateStats();
                 console.log(`✓ ${photos.length} fotos cargadas`);
             } else {
-                // Si no hay fotos, mostrar mensaje
-                generateGallery();
-                console.log('⚠ No hay fotos disponibles. Ejecuta el script de conversión primero.');
+                renderGallery();
+                console.log('⚠ No hay fotos disponibles');
             }
         });
     </script>
 
-    <!-- Cargar lista de fotos (generado por convertir_fotos_completo.py) -->
+    <!-- Cargar lista de fotos -->
     <script src="photos_list.js"></script>
 </body>
 </html>
