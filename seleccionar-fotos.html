@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selección de Fotos - Josefina & David</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='80'>💍</text></svg>">
+
+    <!-- Fuentes -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mr+De+Haviland&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <style>
+        /* Variables */
+        :root {
+            --crema-calido: #F8F6F0;
+            --verde-eucalipto: #2d4232;
+            --verde-salvia: #5a6e4d;
+            --beige-taupe: #8a7866;
+            --dorado-elegante: #b89320;
+            --texto-oscuro: #000000;
+            --texto-medio: #333333;
+            --blanco-floral: #FFFBF5;
+            --font-script: 'Mr De Haviland', cursive;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Montserrat', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: linear-gradient(135deg, var(--crema-calido) 0%, var(--blanco-floral) 100%);
+            color: var(--texto-oscuro);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Decoraciones fijas de fondo */
+        .fixed-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .floral-decoration {
+            position: absolute;
+            opacity: 0.6;
+        }
+
+        .floral-decoration.top-left {
+            top: 0;
+            left: 0;
+            width: 300px;
+            height: 300px;
+        }
+
+        .floral-decoration.bottom-right {
+            bottom: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+        }
+
+        .floral-decoration img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .geometric-frame {
+            position: absolute;
+            top: 40px;
+            left: 40px;
+            right: 40px;
+            bottom: 40px;
+            border: 2px solid var(--dorado-elegante);
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 80px 20px 60px;
+            background: rgba(248, 246, 240, 0.95);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-family: var(--font-script);
+            font-size: 4em;
+            color: var(--verde-eucalipto);
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        header .subtitle {
+            font-family: var(--font-serif);
+            font-size: 1.5em;
+            color: var(--beige-taupe);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        header .info {
+            font-family: var(--font-sans);
+            font-size: 1em;
+            color: var(--texto-medio);
+            max-width: 800px;
+            margin: 20px auto;
+            line-height: 1.8;
+        }
+
+        /* Botón de música */
+        .music-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid var(--dorado-elegante);
+            background: linear-gradient(135deg, var(--verde-eucalipto) 0%, var(--verde-salvia) 100%);
+            color: var(--blanco-floral);
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .music-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 30px rgba(184, 147, 32, 0.4);
+        }
+
+        .music-btn.playing {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            }
+            50% {
+                box-shadow: 0 4px 30px rgba(184, 147, 32, 0.6);
+            }
+        }
+
+        /* Contador de selección */
+        .selection-info {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 1000;
+            background: linear-gradient(135deg, var(--verde-eucalipto) 0%, var(--verde-salvia) 100%);
+            color: var(--blanco-floral);
+            padding: 15px 25px;
+            border-radius: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            font-family: var(--font-sans);
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        /* Galería */
+        .gallery-container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 60px auto;
+            padding: 0 40px 80px;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            aspect-ratio: 1;
+            background: var(--blanco-floral);
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(184, 147, 32, 0.4);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-item.selected {
+            border: 4px solid var(--dorado-elegante);
+            box-shadow: 0 0 30px rgba(184, 147, 32, 0.6);
+        }
+
+        .gallery-item.selected::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--dorado-elegante);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(184, 147, 32, 0.3);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 30px;
+            right: 40px;
+            font-size: 40px;
+            color: white;
+            cursor: pointer;
+            z-index: 2001;
+            background: rgba(0,0,0,0.5);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            border: 2px solid var(--dorado-elegante);
+        }
+
+        .lightbox-close:hover {
+            background: var(--verde-eucalipto);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 50px;
+            color: white;
+            cursor: pointer;
+            padding: 20px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+            user-select: none;
+            border: 2px solid var(--dorado-elegante);
+        }
+
+        .lightbox-nav:hover {
+            background: var(--verde-eucalipto);
+        }
+
+        .lightbox-prev {
+            left: 30px;
+        }
+
+        .lightbox-next {
+            right: 30px;
+        }
+
+        .lightbox-counter {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 18px;
+            background: rgba(0,0,0,0.7);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-family: var(--font-sans);
+            border: 2px solid var(--dorado-elegante);
+        }
+
+        .lightbox-select-btn {
+            position: absolute;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, var(--verde-eucalipto) 0%, var(--verde-salvia) 100%);
+            color: white;
+            border: 2px solid var(--dorado-elegante);
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .lightbox-select-btn:hover {
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 6px 30px rgba(184, 147, 32, 0.5);
+        }
+
+        .lightbox-select-btn.selected {
+            background: linear-gradient(135deg, var(--dorado-elegante) 0%, #d4a734 100%);
+        }
+
+        /* Botones de acción */
+        .action-buttons {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, var(--verde-eucalipto) 0%, var(--verde-salvia) 100%);
+            color: white;
+            border: 2px solid var(--dorado-elegante);
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-size: 16px;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 30px rgba(184, 147, 32, 0.5);
+        }
+
+        .action-btn i {
+            font-size: 20px;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px 20px;
+            background: rgba(248, 246, 240, 0.95);
+            font-family: var(--font-serif);
+            color: var(--texto-medio);
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5em;
+            }
+
+            header .subtitle {
+                font-size: 1em;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 15px;
+            }
+
+            .selection-info {
+                top: 20px;
+                left: 20px;
+                padding: 10px 20px;
+                font-size: 0.9em;
+            }
+
+            .music-btn {
+                top: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+
+            .lightbox-nav {
+                font-size: 30px;
+                width: 50px;
+                height: 50px;
+                padding: 10px;
+            }
+
+            .lightbox-prev {
+                left: 10px;
+            }
+
+            .lightbox-next {
+                right: 10px;
+            }
+
+            .lightbox-close {
+                top: 20px;
+                right: 20px;
+                font-size: 30px;
+                width: 40px;
+                height: 40px;
+            }
+
+            .action-buttons {
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .action-btn {
+                padding: 12px 20px;
+                font-size: 14px;
+            }
+
+            .geometric-frame {
+                top: 20px;
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+            }
+
+            .floral-decoration.top-left,
+            .floral-decoration.bottom-right {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Música de fondo -->
+    <audio id="background-music" loop>
+        <source src="musica-fondo.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Botón de música -->
+    <button id="music-toggle" class="music-btn" aria-label="Controlar música">
+        <i id="music-icon" class="fas fa-volume-mute"></i>
+    </button>
+
+    <!-- Contador de selección -->
+    <div class="selection-info">
+        <i class="fas fa-check-circle"></i> <span id="selection-count">0</span> fotos seleccionadas
+    </div>
+
+    <!-- Decoraciones fijas -->
+    <div class="fixed-background">
+        <div class="floral-decoration top-left">
+            <img src="rosa-izquierda.png" alt="" aria-hidden="true">
+        </div>
+        <div class="floral-decoration bottom-right">
+            <img src="rosa-derecha.png" alt="" aria-hidden="true">
+        </div>
+        <div class="geometric-frame"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <p class="subtitle">SELECCIÓN DE FOTOS</p>
+        <h1>Josefina & David</h1>
+        <p class="info">
+            Bienvenida Josefina, por favor selecciona las fotos que deseas incluir.
+            Haz clic en una foto para verla en grande y seleccionarla.
+            Puedes elegir hasta 200 fotos entre las fotos de la boda civil y religiosa.
+        </p>
+    </header>
+
+    <!-- Galería -->
+    <div class="gallery-container">
+        <div class="gallery" id="gallery">
+            <!-- Las imágenes se generarán con JavaScript -->
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightbox-close">&times;</span>
+        <div class="lightbox-nav lightbox-prev" id="lightbox-prev">&#8249;</div>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="">
+        </div>
+        <div class="lightbox-nav lightbox-next" id="lightbox-next">&#8250;</div>
+        <button class="lightbox-select-btn" id="lightbox-select">Seleccionar esta foto</button>
+        <div class="lightbox-counter" id="lightbox-counter"></div>
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="action-buttons">
+        <button class="action-btn" id="export-btn">
+            <i class="fas fa-download"></i> Exportar selección
+        </button>
+        <button class="action-btn" id="clear-btn">
+            <i class="fas fa-trash"></i> Limpiar selección
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>Recuerdos inolvidables de un día especial</p>
+        <p style="margin-top: 10px; font-size: 0.9em;">Fotografía: Foro 7 - Arturo Cruz</p>
+    </footer>
+
+    <script>
+        // Configuración
+        const totalPhotos = 0; // Se actualizará después de procesar las fotos
+        const maxSelection = 200;
+        let selectedPhotos = new Set();
+        let currentIndex = 0;
+        let musicStarted = false;
+
+        // Elementos del DOM
+        const gallery = document.getElementById('gallery');
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxPrev = document.getElementById('lightbox-prev');
+        const lightboxNext = document.getElementById('lightbox-next');
+        const lightboxCounter = document.getElementById('lightbox-counter');
+        const lightboxSelect = document.getElementById('lightbox-select');
+        const selectionCount = document.getElementById('selection-count');
+        const music = document.getElementById('background-music');
+        const musicToggle = document.getElementById('music-toggle');
+        const musicIcon = document.getElementById('music-icon');
+        const exportBtn = document.getElementById('export-btn');
+        const clearBtn = document.getElementById('clear-btn');
+
+        // Generar galería (se actualizará con el número real de fotos)
+        function generateGallery(numPhotos) {
+            gallery.innerHTML = '';
+            for (let i = 1; i <= numPhotos; i++) {
+                const photoNumber = String(i).padStart(4, '0');
+                const div = document.createElement('div');
+                div.className = 'gallery-item';
+                div.innerHTML = `<img src="images/foto_${photoNumber}.webp" alt="Foto ${i}" loading="lazy" data-index="${i-1}">`;
+                gallery.appendChild(div);
+            }
+            attachGalleryListeners();
+        }
+
+        // Actualizar contador de selección
+        function updateSelectionCount() {
+            selectionCount.textContent = selectedPhotos.size;
+        }
+
+        // Actualizar contador del lightbox
+        function updateLightboxCounter() {
+            lightboxCounter.textContent = `${currentIndex + 1} / ${totalPhotos}`;
+        }
+
+        // Actualizar botón de selección en lightbox
+        function updateSelectButton() {
+            const photoNumber = String(currentIndex + 1).padStart(4, '0');
+            const photoName = `foto_${photoNumber}.webp`;
+
+            if (selectedPhotos.has(photoName)) {
+                lightboxSelect.textContent = '✓ Foto seleccionada';
+                lightboxSelect.classList.add('selected');
+            } else {
+                lightboxSelect.textContent = 'Seleccionar esta foto';
+                lightboxSelect.classList.remove('selected');
+            }
+        }
+
+        // Mostrar imagen en lightbox
+        function showImage(index) {
+            currentIndex = index;
+            const photoNumber = String(index + 1).padStart(4, '0');
+            lightboxImg.src = `images/foto_${photoNumber}.webp`;
+            updateLightboxCounter();
+            updateSelectButton();
+        }
+
+        // Alternar selección de foto
+        function toggleSelection(index) {
+            const photoNumber = String(index + 1).padStart(4, '0');
+            const photoName = `foto_${photoNumber}.webp`;
+
+            if (selectedPhotos.has(photoName)) {
+                selectedPhotos.delete(photoName);
+            } else {
+                if (selectedPhotos.size >= maxSelection) {
+                    alert(`Solo puedes seleccionar hasta ${maxSelection} fotos.`);
+                    return;
+                }
+                selectedPhotos.add(photoName);
+            }
+
+            updateSelectionCount();
+            updateGalleryItem(index);
+            updateSelectButton();
+        }
+
+        // Actualizar elemento de galería
+        function updateGalleryItem(index) {
+            const photoNumber = String(index + 1).padStart(4, '0');
+            const photoName = `foto_${photoNumber}.webp`;
+            const items = document.querySelectorAll('.gallery-item');
+
+            if (selectedPhotos.has(photoName)) {
+                items[index].classList.add('selected');
+            } else {
+                items[index].classList.remove('selected');
+            }
+        }
+
+        // Adjuntar listeners a la galería
+        function attachGalleryListeners() {
+            const galleryItems = document.querySelectorAll('.gallery-item img');
+
+            galleryItems.forEach((item) => {
+                item.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    showImage(index);
+                    lightbox.classList.add('active');
+
+                    // Iniciar música en el primer clic
+                    if (!musicStarted) {
+                        music.play().catch(e => console.log('Error al reproducir música:', e));
+                        musicStarted = true;
+                        musicToggle.classList.add('playing');
+                        musicIcon.classList.remove('fa-volume-mute');
+                        musicIcon.classList.add('fa-volume-up');
+                    }
+                });
+            });
+        }
+
+        // Cerrar lightbox
+        lightboxClose.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        // Cerrar con ESC
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        // Navegación
+        lightboxPrev.addEventListener('click', () => {
+            currentIndex = (currentIndex - 1 + totalPhotos) % totalPhotos;
+            showImage(currentIndex);
+        });
+
+        lightboxNext.addEventListener('click', () => {
+            currentIndex = (currentIndex + 1) % totalPhotos;
+            showImage(currentIndex);
+        });
+
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'ArrowLeft') {
+                    currentIndex = (currentIndex - 1 + totalPhotos) % totalPhotos;
+                    showImage(currentIndex);
+                } else if (e.key === 'ArrowRight') {
+                    currentIndex = (currentIndex + 1) % totalPhotos;
+                    showImage(currentIndex);
+                }
+            }
+        });
+
+        // Selección desde lightbox
+        lightboxSelect.addEventListener('click', () => {
+            toggleSelection(currentIndex);
+        });
+
+        // Soporte táctil
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        lightbox.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        lightbox.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                currentIndex = (currentIndex + 1) % totalPhotos;
+                showImage(currentIndex);
+            }
+            if (touchEndX > touchStartX + 50) {
+                currentIndex = (currentIndex - 1 + totalPhotos) % totalPhotos;
+                showImage(currentIndex);
+            }
+        }
+
+        // Control de música
+        musicToggle.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                musicToggle.classList.add('playing');
+                musicIcon.classList.remove('fa-volume-mute');
+                musicIcon.classList.add('fa-volume-up');
+            } else {
+                music.pause();
+                musicToggle.classList.remove('playing');
+                musicIcon.classList.remove('fa-volume-up');
+                musicIcon.classList.add('fa-volume-mute');
+            }
+        });
+
+        // Exportar selección
+        exportBtn.addEventListener('click', () => {
+            if (selectedPhotos.size === 0) {
+                alert('No has seleccionado ninguna foto.');
+                return;
+            }
+
+            const selectedArray = Array.from(selectedPhotos).sort();
+            const text = selectedArray.join('\n');
+
+            // Crear y descargar archivo
+            const blob = new Blob([text], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'fotos-seleccionadas-josefina-david.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+
+            alert(`${selectedPhotos.size} fotos exportadas correctamente.`);
+        });
+
+        // Limpiar selección
+        clearBtn.addEventListener('click', () => {
+            if (confirm('¿Estás segura de que deseas limpiar toda la selección?')) {
+                selectedPhotos.clear();
+                updateSelectionCount();
+                document.querySelectorAll('.gallery-item').forEach(item => {
+                    item.classList.remove('selected');
+                });
+                updateSelectButton();
+            }
+        });
+
+        // Cerrar lightbox al hacer clic fuera
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+
+        // Inicializar (llamar después de procesar fotos)
+        // generateGallery(totalPhotos);
+    </script>
+</body>
+</html>
