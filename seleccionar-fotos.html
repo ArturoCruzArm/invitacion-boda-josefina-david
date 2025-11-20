@@ -585,8 +585,8 @@
     </footer>
 
     <script>
-        // Configuración
-        const totalPhotos = 0; // Se actualizará después de procesar las fotos
+        // Variables globales
+        // photos se carga desde photos_list.js
         const maxSelection = 200;
         let selectedPhotos = new Set();
         let currentIndex = 0;
@@ -608,16 +608,23 @@
         const exportBtn = document.getElementById('export-btn');
         const clearBtn = document.getElementById('clear-btn');
 
-        // Generar galería (se actualizará con el número real de fotos)
-        function generateGallery(numPhotos) {
+        // Generar galería desde photos array
+        function generateGallery() {
             gallery.innerHTML = '';
-            for (let i = 1; i <= numPhotos; i++) {
-                const photoNumber = String(i).padStart(4, '0');
+            if (typeof photos === 'undefined' || photos.length === 0) {
+                gallery.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--beige-taupe); padding: 40px;">No hay fotos disponibles. Por favor ejecuta el script de conversión primero.</p>';
+                return;
+            }
+
+            photos.forEach((photo, index) => {
                 const div = document.createElement('div');
                 div.className = 'gallery-item';
-                div.innerHTML = `<img src="images/foto_${photoNumber}.webp" alt="Foto ${i}" loading="lazy" data-index="${i-1}">`;
+                if (selectedPhotos.has(photo.name)) {
+                    div.classList.add('selected');
+                }
+                div.innerHTML = `<img src="${photo.path}" alt="Foto ${index + 1}" loading="lazy" data-index="${index}">`;
                 gallery.appendChild(div);
-            }
+            });
             attachGalleryListeners();
         }
 
@@ -628,15 +635,18 @@
 
         // Actualizar contador del lightbox
         function updateLightboxCounter() {
+            const totalPhotos = typeof photos !== 'undefined' ? photos.length : 0;
             lightboxCounter.textContent = `${currentIndex + 1} / ${totalPhotos}`;
         }
 
         // Actualizar botón de selección en lightbox
         function updateSelectButton() {
-            const photoNumber = String(currentIndex + 1).padStart(4, '0');
-            const photoName = `foto_${photoNumber}.webp`;
+            if (typeof photos === 'undefined' || photos.length === 0) return;
 
-            if (selectedPhotos.has(photoName)) {
+            const photo = photos[currentIndex];
+            if (!photo) return;
+
+            if (selectedPhotos.has(photo.name)) {
                 lightboxSelect.textContent = '✓ Foto seleccionada';
                 lightboxSelect.classList.add('selected');
             } else {
@@ -647,26 +657,32 @@
 
         // Mostrar imagen en lightbox
         function showImage(index) {
+            if (typeof photos === 'undefined' || photos.length === 0) return;
+
             currentIndex = index;
-            const photoNumber = String(index + 1).padStart(4, '0');
-            lightboxImg.src = `images/foto_${photoNumber}.webp`;
+            const photo = photos[index];
+            if (!photo) return;
+
+            lightboxImg.src = photo.path;
             updateLightboxCounter();
             updateSelectButton();
         }
 
         // Alternar selección de foto
         function toggleSelection(index) {
-            const photoNumber = String(index + 1).padStart(4, '0');
-            const photoName = `foto_${photoNumber}.webp`;
+            if (typeof photos === 'undefined' || photos.length === 0) return;
 
-            if (selectedPhotos.has(photoName)) {
-                selectedPhotos.delete(photoName);
+            const photo = photos[index];
+            if (!photo) return;
+
+            if (selectedPhotos.has(photo.name)) {
+                selectedPhotos.delete(photo.name);
             } else {
                 if (selectedPhotos.size >= maxSelection) {
                     alert(`Solo puedes seleccionar hasta ${maxSelection} fotos.`);
                     return;
                 }
-                selectedPhotos.add(photoName);
+                selectedPhotos.add(photo.name);
             }
 
             updateSelectionCount();
@@ -676,11 +692,15 @@
 
         // Actualizar elemento de galería
         function updateGalleryItem(index) {
-            const photoNumber = String(index + 1).padStart(4, '0');
-            const photoName = `foto_${photoNumber}.webp`;
-            const items = document.querySelectorAll('.gallery-item');
+            if (typeof photos === 'undefined' || photos.length === 0) return;
 
-            if (selectedPhotos.has(photoName)) {
+            const photo = photos[index];
+            if (!photo) return;
+
+            const items = document.querySelectorAll('.gallery-item');
+            if (!items[index]) return;
+
+            if (selectedPhotos.has(photo.name)) {
                 items[index].classList.add('selected');
             } else {
                 items[index].classList.remove('selected');
@@ -723,11 +743,15 @@
 
         // Navegación
         lightboxPrev.addEventListener('click', () => {
+            if (typeof photos === 'undefined' || photos.length === 0) return;
+            const totalPhotos = photos.length;
             currentIndex = (currentIndex - 1 + totalPhotos) % totalPhotos;
             showImage(currentIndex);
         });
 
         lightboxNext.addEventListener('click', () => {
+            if (typeof photos === 'undefined' || photos.length === 0) return;
+            const totalPhotos = photos.length;
             currentIndex = (currentIndex + 1) % totalPhotos;
             showImage(currentIndex);
         });
@@ -735,6 +759,9 @@
         // Navegación con teclado
         document.addEventListener('keydown', (e) => {
             if (lightbox.classList.contains('active')) {
+                if (typeof photos === 'undefined' || photos.length === 0) return;
+                const totalPhotos = photos.length;
+
                 if (e.key === 'ArrowLeft') {
                     currentIndex = (currentIndex - 1 + totalPhotos) % totalPhotos;
                     showImage(currentIndex);
@@ -764,6 +791,9 @@
         });
 
         function handleSwipe() {
+            if (typeof photos === 'undefined' || photos.length === 0) return;
+            const totalPhotos = photos.length;
+
             if (touchEndX < touchStartX - 50) {
                 currentIndex = (currentIndex + 1) % totalPhotos;
                 showImage(currentIndex);
@@ -832,8 +862,22 @@
             }
         });
 
-        // Inicializar (llamar después de procesar fotos)
-        // generateGallery(totalPhotos);
+        // Inicialización
+        window.addEventListener('DOMContentLoaded', () => {
+            // Esperar a que se cargue photos_list.js
+            if (typeof photos !== 'undefined' && photos.length > 0) {
+                generateGallery();
+                updateSelectionCount();
+                console.log(`✓ ${photos.length} fotos cargadas`);
+            } else {
+                // Si no hay fotos, mostrar mensaje
+                generateGallery();
+                console.log('⚠ No hay fotos disponibles. Ejecuta el script de conversión primero.');
+            }
+        });
     </script>
+
+    <!-- Cargar lista de fotos (generado por convertir_fotos_completo.py) -->
+    <script src="photos_list.js"></script>
 </body>
 </html>
