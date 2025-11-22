@@ -201,13 +201,7 @@
                 <h1 class="hero-title">NUESTRA BODA CIVIL</h1>
 
                 <div class="video-container">
-                    <iframe
-                        src="https://www.youtube.com/embed/-YMGmvZOoV0"
-                        title="Resumen Boda Civil - Josefina & David"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
+                    <div id="youtube-player-resumen"></div>
                 </div>
 
                 <p class="video-subtitle">Un pequeño adelanto de ese día tan especial</p>
@@ -223,13 +217,7 @@
                 <h1 class="hero-title">NUESTRA BODA CIVIL</h1>
 
                 <div class="video-container">
-                    <iframe
-                        src="https://www.youtube.com/embed/JHWdgbM3U6E"
-                        title="Video Boda Civil - Josefina & David"
-                        frameborder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
+                    <div id="youtube-player-completo"></div>
                 </div>
 
                 <p class="video-subtitle">Gracias por acompañarnos en ese día tan especial</p>
@@ -355,5 +343,64 @@
     </footer>
 
     <script src="script.js"></script>
+
+    <!-- YouTube Player API -->
+    <script>
+        var playerResumen, playerCompleto;
+        var playersInitialized = 0;
+        var totalPlayers = 2;
+
+        function onYouTubeIframeAPIReady() {
+            playerResumen = new YT.Player('youtube-player-resumen', {
+                videoId: '-YMGmvZOoV0',
+                playerVars: { 'rel': 0, 'modestbranding': 1, 'playsinline': 1 },
+                events: {
+                    'onReady': function(e) { onPlayerReady(e, playerResumen); },
+                    'onStateChange': function(e) { onPlayerStateChange(e, playerResumen); }
+                }
+            });
+
+            playerCompleto = new YT.Player('youtube-player-completo', {
+                videoId: 'JHWdgbM3U6E',
+                playerVars: { 'rel': 0, 'modestbranding': 1, 'playsinline': 1 },
+                events: {
+                    'onReady': function(e) { onPlayerReady(e, playerCompleto); },
+                    'onStateChange': function(e) { onPlayerStateChange(e, playerCompleto); }
+                }
+            });
+        }
+
+        function onPlayerReady(event, player) {
+            var availableQualities = player.getAvailableQualityLevels();
+            if (availableQualities.indexOf('hd1080') !== -1) {
+                player.setPlaybackQuality('hd1080');
+            } else if (availableQualities.indexOf('hd720') !== -1) {
+                player.setPlaybackQuality('hd720');
+            } else if (availableQualities.indexOf('large') !== -1) {
+                player.setPlaybackQuality('large');
+            }
+        }
+
+        function onPlayerStateChange(event, player) {
+            if (event.data == YT.PlayerState.PLAYING || event.data == YT.PlayerState.BUFFERING) {
+                var currentQuality = player.getPlaybackQuality();
+                if (currentQuality !== 'hd1080' && currentQuality !== 'hd720') {
+                    var availableQualities = player.getAvailableQualityLevels();
+                    if (availableQualities.indexOf('hd1080') !== -1) {
+                        player.setPlaybackQuality('hd1080');
+                    } else if (availableQualities.indexOf('hd720') !== -1) {
+                        player.setPlaybackQuality('hd720');
+                    }
+                }
+            }
+        }
+
+        if (!window.YT) {
+            var tag = document.createElement('script');
+            tag.src = "https://www.youtube.com/iframe_api";
+            var firstScriptTag = document.getElementsByTagName('script')[0];
+            firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        }
+    </script>
 </body>
 </html>
