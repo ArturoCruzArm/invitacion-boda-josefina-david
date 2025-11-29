@@ -169,7 +169,23 @@
             </div>
         </section>
 
-        <!-- 6. Reception Section -->
+        <!-- 6. Video Section - Ceremonia Religiosa -->
+        <section class="content-section" data-section="video-iglesia">
+            <div class="hero-content">
+                <p class="hero-subtitle">REVIVE LOS MOMENTOS DE</p>
+                <h1 class="hero-title">NUESTRA CEREMONIA RELIGIOSA</h1>
+
+                <div class="video-container">
+                    <div id="youtube-player-iglesia"></div>
+                </div>
+
+                <p class="video-subtitle">La ceremonia completa en la iglesia</p>
+
+                <div class="scroll-indicator"><i class="fas fa-chevron-down"></i></div>
+            </div>
+        </section>
+
+        <!-- 7. Reception Section -->
         <section class="content-section" data-section="reception">
             <div class="hero-content">
                 <p class="hero-subtitle">CELEBREMOS EN</p>
@@ -346,9 +362,9 @@
 
     <!-- YouTube Player API -->
     <script>
-        var playerResumen, playerCompleto;
+        var playerResumen, playerCompleto, playerIglesia;
         var playersInitialized = 0;
-        var totalPlayers = 2;
+        var totalPlayers = 3;
 
         function onYouTubeIframeAPIReady() {
             playerResumen = new YT.Player('youtube-player-resumen', {
@@ -366,6 +382,15 @@
                 events: {
                     'onReady': function(e) { onPlayerReady(e, playerCompleto); },
                     'onStateChange': function(e) { onPlayerStateChange(e, playerCompleto); }
+                }
+            });
+
+            playerIglesia = new YT.Player('youtube-player-iglesia', {
+                videoId: 'XpZhUeazjBQ',
+                playerVars: { 'rel': 0, 'modestbranding': 1, 'playsinline': 1 },
+                events: {
+                    'onReady': function(e) { onPlayerReady(e, playerIglesia); },
+                    'onStateChange': function(e) { onPlayerStateChange(e, playerIglesia); }
                 }
             });
         }
