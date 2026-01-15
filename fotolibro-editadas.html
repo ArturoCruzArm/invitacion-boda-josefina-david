@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fotolibro - Boda Josefina & David</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            color: #f0d9b5;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        .header-actions {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4af37, #f0d9b5);
+            color: #1a1a2e;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(212, 175, 55, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Gallery Grid */
+        .gallery-container {
+            padding: 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .gallery-info {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #aaa;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .photo-card {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            aspect-ratio: 1;
+        }
+
+        .photo-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-card .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 15px 10px 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-card:hover .overlay {
+            opacity: 1;
+        }
+
+        .photo-card .photo-name {
+            font-size: 0.8rem;
+            color: #f0d9b5;
+        }
+
+        .photo-card .download-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(212, 175, 55, 0.9);
+            color: #1a1a2e;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            text-decoration: none;
+        }
+
+        .photo-card:hover .download-btn {
+            opacity: 1;
+        }
+
+        /* Lightbox / Visor */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 5px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        .lightbox-info {
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .lightbox-info .photo-title {
+            font-size: 1.2rem;
+            color: #f0d9b5;
+            margin-bottom: 10px;
+        }
+
+        .lightbox-info .photo-counter {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            z-index: 1001;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .lightbox-nav:hover {
+            background: rgba(212, 175, 55, 0.3);
+        }
+
+        .lightbox-prev {
+            left: 20px;
+        }
+
+        .lightbox-next {
+            right: 20px;
+        }
+
+        .lightbox-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #888;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #d4af37;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 30px;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                gap: 10px;
+            }
+
+            .lightbox-nav {
+                width: 45px;
+                height: 45px;
+                font-size: 1.5rem;
+            }
+
+            .lightbox-prev {
+                left: 10px;
+            }
+
+            .lightbox-next {
+                right: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <h1>Fotolibro - Josefina & David</h1>
+        <p>Fotos editadas de la boda - 15 de Noviembre 2025</p>
+        <div class="header-actions">
+            <button class="btn btn-primary" onclick="downloadAll()">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                    <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                </svg>
+                Descargar Todas
+            </button>
+            <a href="index.html" class="btn btn-secondary">
+                <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146z"/>
+                </svg>
+                Volver al Inicio
+            </a>
+        </div>
+    </header>
+
+    <main class="gallery-container">
+        <div class="gallery-info">
+            <span id="photo-count">Cargando fotos...</span>
+        </div>
+        <div class="gallery" id="gallery">
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Cargando fotolibro...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <button class="lightbox-nav lightbox-prev" onclick="prevPhoto()">&#10094;</button>
+        <button class="lightbox-nav lightbox-next" onclick="nextPhoto()">&#10095;</button>
+        <div class="lightbox-content">
+            <img id="lightbox-img" src="" alt="Foto">
+            <div class="lightbox-info">
+                <div class="photo-title" id="lightbox-title"></div>
+                <div class="photo-counter" id="lightbox-counter"></div>
+                <div class="lightbox-actions">
+                    <a id="lightbox-download" class="btn btn-primary" download>
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                        </svg>
+                        Descargar Esta Foto
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Boda Josefina & David - Fotolibro Editado</p>
+        <p>99 fotos seleccionadas y editadas</p>
+    </footer>
+
+    <script>
+        // Lista de fotos
+        const photos = [
+            "foto_0001.jpg", "foto_0002.jpg", "foto_0005.jpg", "foto_0006.jpg",
+            "foto_0008.jpg", "foto_0009.jpg", "foto_0010.jpg", "foto_0011.jpg",
+            "foto_0012.jpg", "foto_0013.jpg", "foto_0014.jpg", "foto_0015.jpg",
+            "foto_0016.jpg", "foto_0019.jpg", "foto_0020.jpg", "foto_0023.jpg",
+            "foto_0024.jpg", "foto_0035.jpg", "foto_0037.jpg", "foto_0039.jpg",
+            "foto_0042.jpg", "foto_0046.jpg", "foto_0055.jpg", "foto_0059.jpg",
+            "foto_0060.jpg", "foto_0061.jpg", "foto_0063.jpg", "foto_0065.jpg",
+            "foto_0066.jpg", "foto_0068.jpg", "foto_0069.jpg", "foto_0078.jpg",
+            "foto_0085.jpg", "foto_0092.jpg", "foto_0093.jpg", "foto_0094.jpg",
+            "foto_0095.jpg", "foto_0097.jpg", "foto_0099.jpg", "foto_0101.jpg",
+            "foto_0103.jpg", "foto_0116.jpg", "foto_0126.jpg", "foto_0132.jpg",
+            "foto_0134.jpg", "foto_0135.jpg", "foto_0138.jpg", "foto_0149.jpg",
+            "foto_0157.jpg", "foto_0197.jpg", "foto_0199.jpg", "foto_0200.jpg",
+            "foto_0201.jpg", "foto_0203.jpg", "foto_0204.jpg", "foto_0212.jpg",
+            "foto_0216.jpg", "foto_0218.jpg", "foto_0222.jpg", "foto_0224.jpg",
+            "foto_0227.jpg", "foto_0228.jpg", "foto_0229.jpg", "foto_0230.jpg",
+            "foto_0234.jpg", "foto_0238.jpg", "foto_0241.jpg", "foto_0243.jpg",
+            "foto_0244.jpg", "foto_0247.jpg", "foto_0250.jpg", "foto_0252.jpg",
+            "foto_0257.jpg", "foto_0258.jpg", "foto_0259.jpg", "foto_0261.jpg",
+            "foto_0262.jpg", "foto_0264.jpg", "foto_0271.jpg", "foto_0272.jpg",
+            "foto_0275.jpg", "foto_0277.jpg", "foto_0280.jpg", "foto_0281.jpg",
+            "foto_0283.jpg", "foto_0284.jpg", "foto_0285.jpg", "foto_0287.jpg",
+            "foto_0291.jpg", "foto_0292.jpg", "foto_0293.jpg", "foto_0294.jpg",
+            "foto_0296.jpg", "foto_0300.jpg", "foto_0303.jpg", "foto_0307.jpg",
+            "foto_0309.jpg", "foto_0310.jpg", "foto_0311.jpg"
+        ];
+
+        const basePath = 'fotolibro-editadas/';
+        let currentIndex = 0;
+
+        // Generar galería
+        function renderGallery() {
+            const gallery = document.getElementById('gallery');
+            gallery.innerHTML = '';
+
+            photos.forEach((photo, index) => {
+                const card = document.createElement('div');
+                card.className = 'photo-card';
+                card.onclick = () => openLightbox(index);
+
+                const photoNumber = photo.replace('foto_', '').replace('.jpg', '');
+
+                card.innerHTML = `
+                    <img src="${basePath}${photo}" alt="${photo}" loading="lazy">
+                    <div class="overlay">
+                        <span class="photo-name">Foto #${parseInt(photoNumber)}</span>
+                    </div>
+                    <a href="${basePath}${photo}" download="${photo}" class="download-btn" onclick="event.stopPropagation()">
+                        <svg width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"/>
+                            <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"/>
+                        </svg>
+                    </a>
+                `;
+
+                gallery.appendChild(card);
+            });
+
+            document.getElementById('photo-count').textContent = `${photos.length} fotos editadas disponibles`;
+        }
+
+        // Lightbox
+        function openLightbox(index) {
+            currentIndex = index;
+            updateLightbox();
+            document.getElementById('lightbox').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        function updateLightbox() {
+            const photo = photos[currentIndex];
+            const photoNumber = photo.replace('foto_', '').replace('.jpg', '');
+
+            document.getElementById('lightbox-img').src = basePath + photo;
+            document.getElementById('lightbox-title').textContent = `Foto #${parseInt(photoNumber)}`;
+            document.getElementById('lightbox-counter').textContent = `${currentIndex + 1} de ${photos.length}`;
+
+            const downloadLink = document.getElementById('lightbox-download');
+            downloadLink.href = basePath + photo;
+            downloadLink.download = photo;
+        }
+
+        function nextPhoto() {
+            currentIndex = (currentIndex + 1) % photos.length;
+            updateLightbox();
+        }
+
+        function prevPhoto() {
+            currentIndex = (currentIndex - 1 + photos.length) % photos.length;
+            updateLightbox();
+        }
+
+        // Teclado
+        document.addEventListener('keydown', (e) => {
+            if (!document.getElementById('lightbox').classList.contains('active')) return;
+
+            switch(e.key) {
+                case 'ArrowRight':
+                    nextPhoto();
+                    break;
+                case 'ArrowLeft':
+                    prevPhoto();
+                    break;
+                case 'Escape':
+                    closeLightbox();
+                    break;
+            }
+        });
+
+        // Descargar todas
+        async function downloadAll() {
+            const confirmed = confirm('Se descargarán las 99 fotos. Esto puede tomar un momento. ¿Continuar?');
+            if (!confirmed) return;
+
+            // Descargar una por una con intervalo para no saturar
+            for (let i = 0; i < photos.length; i++) {
+                const link = document.createElement('a');
+                link.href = basePath + photos[i];
+                link.download = photos[i];
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // Pequeña pausa entre descargas
+                await new Promise(resolve => setTimeout(resolve, 200));
+            }
+
+            alert('Descarga completada. Revisa tu carpeta de descargas.');
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', renderGallery);
+    </script>
+</body>
+</html>
